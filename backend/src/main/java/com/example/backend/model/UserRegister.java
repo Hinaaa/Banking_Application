@@ -6,7 +6,6 @@ public record UserRegister(
         String phoneNumber,
         String email,
         String password,
-        String passwordConfirmation,
         int yearOfBirth,
         String streetAddress,
         String city,

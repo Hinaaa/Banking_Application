@@ -4,7 +4,7 @@ import * as React from 'react';
 
 export default function Register() {
     const [email, setEmail] = useState("")
-    const [newPassword, setNewPassword] = useState("")
+    const [password, setPassword] = useState("")
     const [confirmNewPassword, setConfirmNewPassword] = useState("")
     const [error, setError] = useState("")
     const navigate = useNavigate()
@@ -15,7 +15,7 @@ export default function Register() {
             setError("Pleas enter Email");
             return;
         }
-        if (!newPassword) {
+        if (!password) {
             setError("Please enter Password");
             return;
         }
@@ -23,16 +23,19 @@ export default function Register() {
             setError("Please enter Confirm Password");
             return;
         }
-        if (newPassword !== confirmNewPassword) {
+        if (password !== confirmNewPassword) {
             setError("Passwords do not match");
             return;
         }
         setError("");
-        navigate("/registerdetail")
+        navigate("/registerdetail",{
+            state: { //passing state to registration detail
+                email, password
+            }
+        })
     }
 
     return (
-
         <div className="auth-form">
             <h2>Register User</h2>
             <form onSubmit={handleRegistration}>
@@ -41,8 +44,8 @@ export default function Register() {
                        onChange={(e) => setEmail(e.target.value)}
                 />
                 <label htmlFor="password">Set Password:</label>
-                <input type={"password"} placeholder={"new password"} value={newPassword}
-                       onChange={(e) => setNewPassword(e.target.value)}
+                <input type={"password"} placeholder={"new password"} value={password}
+                       onChange={(e) => setPassword(e.target.value)}
                 />
                 <label htmlFor="password">Confirm Password:</label>
                 <input type={"password"} placeholder={"re-type password"} value={confirmNewPassword}
