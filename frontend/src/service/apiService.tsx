@@ -39,7 +39,7 @@ export async function loginUser(email: string, password: string) {
     } catch (err) {
         if (axios.isAxiosError(err)) {
            //GlobalExceptionHandler sends { errorMessage, statusCode }
-            const backendError = (err.response?.data as any)?.errorMessage; //read err.response.data.errorMessage
+            const backendError = (err.response?.data)?.errorMessage; //read err.response.data.errorMessage
             throw new Error(backendError || "Error: Could not connect to backend");
         }
         throw new Error("Unknown error occurred");

@@ -1,16 +1,12 @@
 package com.example.backend.service;
 
-import com.example.backend.controller.UserController;
 import com.example.backend.exception.InvalidCredentialsException;
 import com.example.backend.model.Response;
 import com.example.backend.model.User;
 import com.example.backend.model.UserLogin;
 import com.example.backend.model.UserRegister;
 import com.example.backend.repo.UserRepo;
-import jakarta.servlet.Registration;
 import org.springframework.stereotype.Service;
-
-import java.rmi.registry.Registry;
 
 @Service
 public class UserService {

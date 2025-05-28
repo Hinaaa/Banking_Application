@@ -16,7 +16,7 @@ export default function RegisterDetail() {
 
     const handleRegister = () => {
         if (!firstName || !lastName || !phone || !street || !houseNumber || !postalCode || !city || !country) {
-            setError("Please fill in all mandatory fields.");
+            setError("Please fill in all mandatory fields");
             return;
         }
 
