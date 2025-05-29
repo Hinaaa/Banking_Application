@@ -39,7 +39,7 @@ export default function RegisterDetail() {
            postalCode, city, country, yearOfBirth: Number(yearOfBirth)
        }
             setError("");
-            navigate("/"); // redirect after successful "register"
+            navigate("/dashboard"); // redirect after successful "register"
         try {
             await registerUser(payload)
         }

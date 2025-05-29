@@ -22,10 +22,17 @@ export default function Login() {
         setResponseMessage(null); // Clearing previous messages before sending the request
 
         try {
-
             const data = await loginUser(email, password);
             setResponseMessage({message: data.message, type: "Success"}); //response received from backend
-            navigate("/") //my url to navigates once i develop page
+            const userId = data.userId
+            localStorage.setItem("currentUserId", String(userId))
+
+            //  if(data.profileCompleted) {
+            navigate("/registeraccount")//("/dashboard") //my url to navigates once i develop page
+           // }
+           // else {
+             //   navigate()
+            //}
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setResponseMessage({ message: error.message, type: "error" });

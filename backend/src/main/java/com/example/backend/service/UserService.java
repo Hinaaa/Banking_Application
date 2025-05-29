@@ -41,6 +41,10 @@ public class UserService {
             //return new Response( "Wrong email or password","fail");
             throw new InvalidCredentialsException("Wrong Email or Password");
         }
-        return new Response("Login successful", "success");
+        return new Response("Login successful", "success",registeredUser.getId());
+    }
+
+    public Response registerAccount(UserRegister user) {
+        return null;
     }
 }

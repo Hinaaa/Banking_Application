@@ -7,7 +7,7 @@ const navigate = useNavigate()
         navigate("/login")
     }
     const handleRegister = () => {
-        navigate("register")
+        navigate("/register")
     }
 
     return (

@@ -2,6 +2,7 @@ package com.example.backend.model;
 //for structure response
 public record Response(
       String message,
-      String messageType
+      String messageType,
+      Long userId
 ) {
 }

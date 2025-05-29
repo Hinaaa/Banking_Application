@@ -45,3 +45,28 @@ export async function loginUser(email: string, password: string) {
         throw new Error("Unknown error occurred");
     }
 }
+//apiService
+export async function registerAccountDetails(accountData: {
+    userId: number;
+    accountHolderName: string;
+    iban: string;
+    bic: string;
+    cardNumber: string;
+    cardHolder: string;
+    expiryDate: string;
+    cvv: string;
+    pin: string;
+}) {
+    try {
+        const response = await axios.post(
+            "/api/account/accountregister",    // ← exact match
+            accountData
+        );
+        return response.data as { message: string };
+    } catch (err) {
+        if (axios.isAxiosError(err)) {
+            // … your existing error handling …
+        }
+        throw new Error("Unknown error occurred.");
+    }
+}
