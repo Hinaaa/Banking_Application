@@ -5,6 +5,8 @@ import com.example.backend.repo.AccountRepo;
 import com.example.backend.repo.UserRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AccountService {
     private final AccountRepo accountRepo; //inject account repo
@@ -19,11 +21,11 @@ public class AccountService {
         User user = userRepo.findById(accountDetail.userId())
                 .orElse(null);
         //user not exists means not registered
-        if(user == null) {
-            return new Response("User not found", "Error", null,false, false); //
+        if (user == null) {
+            return new Response("User not found", "Error", null, false, false); //
         }
         //if user already have account
-        if(accountRepo.existsByUser(user)) { //existsByUser JPT function is any Account record where the foreign key to the User matches
+        if (accountRepo.existsByUser(user)) { //existsByUser JPT function is any Account record where the foreign key to the User matches
             return new Response("User already exists", "Info", user.getId(), true, true);
         }
 
@@ -39,7 +41,36 @@ public class AccountService {
         account.setCvv(accountDetail.cvv());
         account.setPin(accountDetail.pin());
         accountRepo.save(account);
-        return new Response("account registered", "Success", user.getId(),true,true
+        return new Response("account registered", "Success", user.getId(), true, true
         ); //passes the user’s ID into your Response record
+    }
+
+    //View account details
+    public AccountDetailResponse viewAccountDetails(Long userId) {
+        //if user exists - save side check this
+        Optional<Account> optionalAccount = accountRepo.findByUserId(userId);
+
+        // If not present, return a response indicating “no account”
+        if (optionalAccount.isPresent()) {
+            Account account = optionalAccount.get(); // Directly retrieve account. Spring Data translated to SELECT * FROM accounts WHERE user_id = :userId
+            AccountDetail accountDetail = new AccountDetail( //Map Account entity to AccountDetail Dto
+                    account.getUser().getId(),
+                    account.getAccountHolderName(),
+                    account.getIban(),
+                    account.getBic(),
+                    account.getCardNumber(),
+                    account.getCardHolder(),
+                    account.getExpiryDate(),
+                    account.getCvv(),
+                    account.getPin()
+            );
+            return new AccountDetailResponse("account details fetched successfully", "success", userId, true, accountDetail);
+        } else
+            return new AccountDetailResponse(
+                    "No account found for user",
+                    "error",
+                    userId,
+                    false, // hasAccount = false
+                    null); // no AccountDetail to return
     }
 }
