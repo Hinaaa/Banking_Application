@@ -5,16 +5,21 @@ import com.example.backend.model.Response;
 import com.example.backend.model.User;
 import com.example.backend.model.UserLogin;
 import com.example.backend.model.UserRegister;
+import com.example.backend.repo.AccountRepo;
 import com.example.backend.repo.UserRepo;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
     private final UserRepo userRepo;
-    public UserService(UserRepo userRepo) {
+    private final AccountRepo accountRepo;
+
+    public UserService(UserRepo userRepo, AccountRepo accountRepo) {
         this.userRepo = userRepo;
+        this.accountRepo = accountRepo;
     }
-    public String registerUser(UserRegister userRegister) {
+    //register user
+    public Response registerUser(UserRegister userRegister) {
 
         User user = new User(); // Map record to entity
         user.setFirstName(userRegister.firstName());
@@ -28,9 +33,10 @@ public class UserService {
         user.setPostalCode(userRegister.postalCode());
         user.setCountry(userRegister.country());
         userRepo.save(user);
-        return "user registered";
-    }
+        return new Response("User registered", "Success", user.getId(), true, false); //is registered = true, have account = false
 
+    }
+    //login user
     public Response loginUser(UserLogin userLogin) {
         //db mapping:
         User registeredUser = userRepo.findByEmail(userLogin.email()); // fetching user from db
@@ -41,10 +47,7 @@ public class UserService {
             //return new Response( "Wrong email or password","fail");
             throw new InvalidCredentialsException("Wrong Email or Password");
         }
-        return new Response("Login successful", "success",registeredUser.getId());
-    }
-
-    public Response registerAccount(UserRegister user) {
-        return null;
+        boolean accountExists = accountRepo.existsByUser(registeredUser);//check if user exists return true or false accordingly
+        return new Response("Login successful", "success",registeredUser.getId(),true,accountExists); //as response needed more details so userRegistered = true (just registered here) and accountCreated = false (as no account created when user newly registered)
     }
 }

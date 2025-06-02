@@ -1,16 +1,18 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import * as React from 'react';
+import {loginUser} from "../service/apiService.tsx";
 
 export default function Register() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmNewPassword, setConfirmNewPassword] = useState("")
     const [error, setError] = useState("")
-    const navigate = useNavigate()
-    const handleRegistration = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+    const [responseMessage, setResponseMessage] = useState<{message: string; type: "success" | "error" | "info"; } | null>(null);
+    const navigate = useNavigate();
 
+    const handleRegistration = async (e: React.FormEvent<HTMLFormElement>) => {// async so it can await the backend check
+        e.preventDefault()
         if (!email) {
             setError("Pleas enter Email");
             return;
@@ -28,12 +30,30 @@ export default function Register() {
             return;
         }
         setError("");
-        navigate("/registerdetail",{
-            state: { //passing state to registration detail
-                email, password
+
+        //if user registered it should ot allow to create user with same email
+        try {
+            const data = await loginUser(email, password); // loginUser fails if user not registered
+
+            // if login is successful (i.e., user exists), then we stop and show message
+            if (data.isRegistered === true) {
+                setResponseMessage({ message: "Email Id already in Use", type: "error" });
             }
-        })
-    }
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                console.error("Login error:", err.message);
+            } else {
+                console.error("Unknown error:", err);
+            }
+            //assuming user is not registered
+            navigate("/registerdetail", {
+                state: {
+                    email,
+                    password,
+                },
+            });
+        }
+    };
 
     return (
         <div className="auth-form">
@@ -53,7 +73,12 @@ export default function Register() {
                 />
                 <button type={"submit"}>Continue</button>
                 {error && <div className="error-message">{error}</div>}
+                {responseMessage && (
+                    <div className={`message ${responseMessage.type.toLowerCase()}`}>
+                        {responseMessage.message}
+                    </div>
+                )}
             </form>
         </div>
-    )
+    );
 }

@@ -1,16 +1,14 @@
 import {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import * as React from 'react';
 import {loginUser} from "../service/apiService.tsx";
 
 export default function Login() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [responseMessage, setResponseMessage] = useState<{ message: string, type: "Success" | "error" | "info" } | null>(null); //just initilizing and defing values here
-    const navigate = useNavigate();
+    const [responseMessage, setResponseMessage] = useState<{message: string; type: "success" | "error" | "info"; } | null>(null);    const navigate = useNavigate();
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-
         if (!email) {
             setResponseMessage({ message: "Please enter Email", type: "error" });
             return;
@@ -23,17 +21,21 @@ export default function Login() {
 
         try {
             const data = await loginUser(email, password);
-            setResponseMessage({message: data.message, type: "Success"}); //response received from backend
-            const userId = data.userId
-            localStorage.setItem("currentUserId", String(userId))
-
-            //  if(data.profileCompleted) {
-            navigate("/registeraccount")//("/dashboard") //my url to navigates once i develop page
-           // }
-           // else {
-             //   navigate()
-            //}
-        } catch (error: unknown) {
+            localStorage.setItem("currentUserId", String(data.userId)); //store the returned userId in localStorage so others can read it
+            //user registered and have account
+            if (data.hasAccount === true){ //registered
+                console.log(data.hasAccount)
+                navigate("/dashboard") //user registered and have account go to dashboard
+                return; //stopped as navigated to dashboard
+            }
+            //user registered but dont have account
+              if (data.hasAccount === false){
+                  console.log(data.hasAccount)
+                  navigate("/registeraccount") //user registered and has no account goto register account page
+                  return; //stopped as moved to register account
+              }
+             //error
+            } catch (error: unknown) {
             if (error instanceof Error) {
                 setResponseMessage({ message: error.message, type: "error" });
             } else {
@@ -42,7 +44,7 @@ export default function Login() {
         }
     };
 
-    return (
+return (
         <>
             <div className="auth-form">
                 <h2>Login</h2>
@@ -61,6 +63,7 @@ export default function Login() {
                             {responseMessage.message}
                         </div>
                     )}
+                    <div><p>Don't have an account? <Link to="/register">Register User</Link></p></div>
                 </form>
             </div>
         </>

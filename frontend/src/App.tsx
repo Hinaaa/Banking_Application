@@ -6,6 +6,7 @@ import Register from "./page/Register.tsx";
 import RegisterDetail from "./page/RegisterDetail.tsx";
 import Home from "./page/Home.tsx";
 import RegisterAccount from "./page/RegisterAccount.tsx";
+import Dashboard from "./page/Dashboard.tsx";
 
 function App() {
 
@@ -16,8 +17,9 @@ function App() {
          <Route path ={"/"} element={<Home/>}/>
          <Route path={"/login"} element={<Login/>}/>
          <Route path={"/register"} element={<Register/>}/>
-            <Route path={"/registerdetail"} element={<RegisterDetail/>}/>
-            <Route path="/registeraccount" element={<RegisterAccount />} />
+          <Route path={"/registerdetail"} element={<RegisterDetail/>}/>
+          <Route path="/registeraccount" element={<RegisterAccount />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
     </>
   )

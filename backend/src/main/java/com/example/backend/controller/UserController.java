@@ -19,17 +19,13 @@ public class UserController {
         this.userService = userService;
     }
 
-
     @PostMapping("/register")
-    public String register(@RequestBody UserRegister user) {
-        return userService.registerUser(user);
+    public ResponseEntity<Response> register(@RequestBody UserRegister user) {
+        return ResponseEntity.ok(userService.registerUser(user));
     }
+
     @PostMapping("/login")
-    public ResponseEntity<Response> login(@RequestBody UserLogin user) { //ResponseEntity for whole http response
+    public ResponseEntity<Response> login(@RequestBody UserLogin user) {
         return ResponseEntity.ok(userService.loginUser(user));
-    }
-    @PostMapping("/registeraccount")
-    public ResponseEntity<Response> registerAccount(@RequestBody UserRegister user) {
-        return ResponseEntity.ok(userService.registerAccount(user));
     }
 }
