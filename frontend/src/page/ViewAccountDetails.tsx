@@ -1,0 +1,59 @@
+import {useEffect, useState} from "react"
+import type {AccountDetail} from "../service/types.ts"
+import { getAccountDetails } from "../service/apiService.tsx"
+import { useSearchParams } from "react-router-dom";
+//
+// type accountDetailProps = {
+//     user_id: number
+// };
+//export default function ViewAccountDetails(props:Readonly<accountDetailProps>){
+export default function ViewAccountDetails() {
+    const [account, setAccount] = useState<AccountDetail | null>(null)
+    const [error, setError] = useState("");
+    const [searchParams] = useSearchParams();
+    const idParam = searchParams.get("user_id");
+    const numericId = idParam ? Number(idParam) : NaN;
+    useEffect(() => {// Runs only once when the component opens
+        if (!numericId || isNaN(numericId)) {
+            setError("Invalid or missing user_id in URL");
+            return;
+        }async function fetchAccount() {  //async function to call the backend
+            try {
+                //const response = await getAccountDetails(props.user_id);  //calls api
+                const response = await getAccountDetails(numericId)
+                if (response.hasAccount && response.accountDetail) {
+                    setAccount(response.accountDetail) //account info stored
+                } else {
+                    setError("No account found")
+                }
+            } catch {
+                setError("Failed to connect with backend.");// show this if backend fails
+            }
+        }
+        fetchAccount() //call function)
+    }, [numericId])
+    if (error) {
+        return <p>{error}</p>;
+    }
+    if(!account) {
+       return <p>Loading..</p>
+    }
+return(
+    <>
+    <div className="accountDetail">
+        <h3>Account Details</h3>
+        <p>Account Holder: {account.accountHolderName}</p>
+        <p>IBAN: {account.iban}</p>
+        <p>BIC: {account.bic}</p>
+        </div>
+    <div className="carddetail">
+        <h3>Card details</h3>
+        <p>Card Number: {account.cardNumber}</p>
+        <p>Card Holder: {account.cardHolder}</p>
+        <p>Expiry Date: {account.expiryDate}</p>
+        <p>CVV: {account.cvv}</p>
+        <p>PIN: {account.pin}</p>
+    </div>
+    </>
+)
+}

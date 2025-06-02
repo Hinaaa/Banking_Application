@@ -1,4 +1,5 @@
 import axios from "axios";
+import type {AccountDetailResponse} from "./types.ts";
 
 //register a new user, sends input detail to backend
 export async function registerUser(registrationDetails: {
@@ -77,5 +78,31 @@ export async function registerAccountDetails(accountData: {
             throw new Error("Error: Could not connect to backend"); //when not from backend
         }
         throw new Error("Unknown error occurred");// Unknown error when not from axios
+    }
+}
+
+//view account details -- GET
+export async function getAccountDetails(user_id: number) {
+    try {
+        const response = await axios.get("/api/account/viewaccountdetails", {
+            params: {user_id},
+        })
+        return response.data as AccountDetailResponse
+    } catch(err) {
+        if (axios.isAxiosError(err)) {
+            if (
+                err.response?.data &&
+                typeof err.response.data === "object" &&
+                "message" in err.response.data
+            ) {
+                const backendMessage = (err.response.data as { message: string }).message;
+                throw new Error(backendMessage);
+            }
+            if (typeof err.response?.data === "string") {
+                throw new Error(err.response.data);
+            }
+            throw new Error("Error: Could not connect to backend");
+        }
+        throw new Error("Unknown error occurred");
     }
 }
