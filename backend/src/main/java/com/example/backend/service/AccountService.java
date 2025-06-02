@@ -50,7 +50,7 @@ public class AccountService {
         //if user exists - save side check this
         Optional<Account> optionalAccount = accountRepo.findByUserId(userId);
 
-        // If not present, return a response indicating “no account”
+        // If not present, return a response
         if (optionalAccount.isPresent()) {
             Account account = optionalAccount.get(); // Directly retrieve account. Spring Data translated to SELECT * FROM accounts WHERE user_id = :userId
             AccountDetail accountDetail = new AccountDetail( //Map Account entity to AccountDetail Dto
