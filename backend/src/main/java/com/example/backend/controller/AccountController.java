@@ -18,7 +18,7 @@ public class AccountController {
         this.accountService = accountService;
     }
     //register account
-    @PostMapping("/accountregister")
+    @PostMapping("/registeraccount")
     public ResponseEntity<Response> registerAccount(@RequestBody AccountDetail accountDetail) {
         return ResponseEntity.ok(accountService.registerAccount(accountDetail));
     }

@@ -17,9 +17,17 @@ public class AccountService {
 
     public Response registerAccount(AccountDetail accountDetail) {
         User user = userRepo.findById(accountDetail.userId())
-                           .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElse(null);
+        //user not exists means not registered
+        if(user == null) {
+            return new Response("User not found", "Error", null,false, false); //
+        }
+        //if user already have account
+        if(accountRepo.existsByUser(user)) { //existsByUser JPT function is any Account record where the foreign key to the User matches
+            return new Response("User already exists", "Info", user.getId(), true, true);
+        }
 
-    //create link account
+        //create link account, when user exists and account not exist so register account
         Account account = new Account();
         account.setUser(user);
         account.setAccountHolderName(accountDetail.accountHolderName());
@@ -31,6 +39,7 @@ public class AccountService {
         account.setCvv(accountDetail.cvv());
         account.setPin(accountDetail.pin());
         accountRepo.save(account);
-        return new Response("account registered", "Success", user.getId()); //passes the user’s ID into your Response record
+        return new Response("account registered", "Success", user.getId(),true,true
+        ); //passes the user’s ID into your Response record
     }
 }

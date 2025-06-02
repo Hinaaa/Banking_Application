@@ -16,12 +16,11 @@ export default function RegisterAccount() {
     const [expiryDate, setExpiryDate] = useState("");
     const [cvv, setCvv] = useState("");
 
-    //enter pin code for authetication
+    //Enter pin code for authentication
     const [pin,setPin] = useState(""); //this pin delivered to customer
-
     const [responseMessage, setResponseMessage] = useState<{ message: string, type: "Success" | "error" | "info" } | null>(null);
 
-    //handleAccountRegister
+    //HandleAccountRegister
     const handleAccountRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if(!accountHolderName || !iban || !bic || !cardNumber || !cardHolder || !expiryDate || !cvv || !pin) {
@@ -29,7 +28,7 @@ export default function RegisterAccount() {
             return;
         }
         setResponseMessage(null);
-        //cuuernt user id read
+        //current user id read
         const userId = Number(localStorage.getItem("currentUserId"));
         if (!userId) {
             setResponseMessage({ message: "User not logged in", type: "error" });
@@ -124,9 +123,7 @@ export default function RegisterAccount() {
                         {responseMessage.message}
                     </div>
                 )}
-
             </form>
-
         </>
     )
 }

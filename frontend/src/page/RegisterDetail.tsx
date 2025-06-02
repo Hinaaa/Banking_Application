@@ -23,7 +23,6 @@ export default function RegisterDetail() {
     const [yearOfBirth, setYearOfBirth] = useState("");
     const [error, setError] = useState("");
 
-
     const handleRegister = async () => {
         if (!firstName || !lastName || !phone || !street || !houseNumber || !postalCode || !city || !country || !yearOfBirth) {
             setError("Please fill in all mandatory fields");
@@ -31,21 +30,21 @@ export default function RegisterDetail() {
         }
         //connecting to axios for backend data
        const payload = {
-
            email: registrationBasic.email, password: registrationBasic.password,
            passwordConfirmation: registrationBasic.password,
            firstName, lastName, phoneNumber: phone,
            streetAddress: `${street} ${houseNumber}`, //street +  houseNumber as backend expects
            postalCode, city, country, yearOfBirth: Number(yearOfBirth)
        }
-            setError("");
-            navigate("/dashboard"); // redirect after successful "register"
+
         try {
-            await registerUser(payload)
+            await registerUser(payload) //when successful login
+            setError(""); //clear previous message
+            navigate("/login") // redirect after successful registration
+
         }
         catch (err) {
             if(axios.isAxiosError(err)) {setError(err.message || "registration failed")}
-            //setError(err.message || "registration failed") //message of database otherwise simple this message
         }
     };
 
