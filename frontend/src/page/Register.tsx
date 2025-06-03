@@ -2,6 +2,7 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import * as React from 'react';
 import {loginUser} from "../service/apiService.tsx";
+import "../css/Register.css";
 
 export default function Register() {
     const [email, setEmail] = useState("")
@@ -56,29 +57,42 @@ export default function Register() {
     };
 
     return (
-        <div className="auth-form">
-            <h2>Register User</h2>
-            <form onSubmit={handleRegistration}>
-                <label htmlFor="email">Email:</label>
-                <input type={"email"} placeholder={"email"} value={email}
-                       onChange={(e) => setEmail(e.target.value)}
-                />
-                <label htmlFor="password">Set Password:</label>
-                <input type={"password"} placeholder={"new password"} value={password}
-                       onChange={(e) => setPassword(e.target.value)}
-                />
-                <label htmlFor="password">Confirm Password:</label>
-                <input type={"password"} placeholder={"re-type password"} value={confirmNewPassword}
-                       onChange={(e) => setConfirmNewPassword(e.target.value)}
-                />
-                <button type={"submit"}>Continue</button>
-                {error && <div className="error-message">{error}</div>}
-                {responseMessage && (
-                    <div className={`message ${responseMessage.type.toLowerCase()}`}>
-                        {responseMessage.message}
-                    </div>
-                )}
-            </form>
+        <div className="auth-wrapper">
+            <div className="auth-form">
+                <h2>Register User</h2>
+                <form onSubmit={handleRegistration}>
+                    <label htmlFor="email">Email:</label>
+                    <input
+                        type="email"
+                        placeholder="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <label htmlFor="password">Set Password:</label>
+                    <input
+                        type="password"
+                        placeholder="new password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <label htmlFor="password">Confirm Password:</label>
+                    <input
+                        type="password"
+                        placeholder="re-type password"
+                        value={confirmNewPassword}
+                        onChange={(e) => setConfirmNewPassword(e.target.value)}
+                    />
+                    <button type="submit">Continue</button>
+
+                    {error && <div className="error-message">{error}</div>}
+
+                    {responseMessage && (
+                        <div className={`message ${responseMessage.type.toLowerCase()}`}>
+                            {responseMessage.message}
+                        </div>
+                    )}
+                </form>
+            </div>
         </div>
     );
 }

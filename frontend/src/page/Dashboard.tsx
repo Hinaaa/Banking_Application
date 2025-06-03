@@ -26,6 +26,7 @@ export default function Dashboard() {
             <button onClick={handleViewAccountDetails}>View Account Details</button>
             <button onClick={handleAddMoneyPayment}>Add Money</button>
             <button onClick={handleSendMoneyPayment}>Send Money</button>
+            <h1>Transactions: </h1>
         </>
     )
 }

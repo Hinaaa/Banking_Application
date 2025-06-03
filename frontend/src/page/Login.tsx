@@ -2,6 +2,7 @@ import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import * as React from 'react';
 import {loginUser} from "../service/apiService.tsx";
+import "../css/Login.css";
 
 export default function Login() {
     const [email, setEmail] = useState("")
@@ -44,18 +45,24 @@ export default function Login() {
         }
     };
 
-return (
-        <>
+    return (
+        <div className="auth-wrapper">
             <div className="auth-form">
                 <h2>Login</h2>
                 <form onSubmit={handleLogin}>
                     <label htmlFor="email">Email:</label>
-                    <input type={"email"} placeholder={"email *"} value={email}
-                           onChange={(e) => setEmail(e.target.value)}
+                    <input
+                        type="email"
+                        placeholder="email *"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <label htmlFor="password">Password:</label>
-                    <input type={"password"} placeholder={"password *"} value={password}
-                           onChange={(e) => setPassword(e.target.value)}
+                    <input
+                        type="password"
+                        placeholder="password *"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                     <button type="submit">Login</button>
                     {responseMessage && (
@@ -63,9 +70,13 @@ return (
                             {responseMessage.message}
                         </div>
                     )}
-                    <div><p>Don't have an account? <Link to="/register">Register User</Link></p></div>
+                    <div className="register-link">
+                        <p>
+                            Don't have an account? <Link to="/register">Register User</Link>
+                        </p>
+                    </div>
                 </form>
             </div>
-        </>
-    )
+        </div>
+    );
 }

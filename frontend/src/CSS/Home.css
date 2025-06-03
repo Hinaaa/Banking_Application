@@ -1,0 +1,123 @@
+/* Header styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  width: 100%;
+  background-color: var(--white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.logo {
+  font-size: 1.8rem;
+  color: var(--primary-blue);
+  font-weight: 700;
+  max-width: 150px;              /* Prevents logo from stretching too wide */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  display: flex;
+  align-items: center;
+}
+
+.btn.small {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background-color: var(--primary-blue);
+  color: var(--white);
+  transition: background-color 0.3s ease;
+}
+
+.btn.small:hover,
+.btn.small:focus {
+  background-color: var(--primary-blue-light);
+  outline: none;
+}
+
+/* Your existing hero section styles */
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 2rem 0;
+  box-sizing: border-box;
+}
+
+.hero-left {
+  flex: 1;
+  min-width: 280px;
+  max-width: 550px; /* slightly smaller to give more room for image */
+}
+
+.hero-left h2 {
+  color: var(--primary-blue);
+  font-size: 2.6rem;
+  margin-bottom: 1rem;
+}
+
+.hero-left h4 {
+  font-size: 2.2rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+.hero-left p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+.hero-right {
+  flex: 1;
+  min-width: 280px;
+  max-width: 800px; /* increased max-width for bigger image */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 82, 204, 0.15);
+  box-sizing: border-box;
+}
+
+.hero-right img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .hero-left,
+  .hero-right {
+    max-width: 100%;
+  }
+}
