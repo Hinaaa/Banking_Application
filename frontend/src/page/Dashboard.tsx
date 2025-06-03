@@ -11,10 +11,21 @@ export default function Dashboard() {
         const numericId = Number(stored);
         navigate(`/viewaccountdetails?user_id=${numericId}`) //Include the user_id query param
     }
+    //a payment block here
+    //payment add money logic
+    const handleAddMoneyPayment = () => {
+        navigate("/addmoney")
+    }
+    //send Moeny
+    const handleSendMoneyPayment = () => {
+        navigate("/sendmoney")
+    }
     return (
         <>
-            <h1>Im dashboard</h1>
+            <h1>Welcome to your Dashboard</h1>
             <button onClick={handleViewAccountDetails}>View Account Details</button>
+            <button onClick={handleAddMoneyPayment}>Add Money</button>
+            <button onClick={handleSendMoneyPayment}>Send Money</button>
         </>
     )
 }
