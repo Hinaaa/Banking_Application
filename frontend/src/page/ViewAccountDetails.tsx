@@ -2,6 +2,7 @@ import {useEffect, useState} from "react"
 import type {AccountDetail} from "../service/types.ts"
 import { getAccountDetails } from "../service/apiService.tsx"
 import { useSearchParams } from "react-router-dom";
+import "../css/ViewAccountDetail.css";
 //
 // type accountDetailProps = {
 //     user_id: number
@@ -38,22 +39,27 @@ export default function ViewAccountDetails() {
     if(!account) {
        return <p>Loading..</p>
     }
-return(
-    <>
-    <div className="accountDetail">
-        <h3>Account Details</h3>
-        <p>Account Holder: {account.accountHolderName}</p>
-        <p>IBAN: {account.iban}</p>
-        <p>BIC: {account.bic}</p>
+    return (
+        <div className="auth-wrapper">
+            <div className="auth-form">
+                <h2 className="form-heading">View Account Details</h2>
+
+                <div className="accountDetail">
+                    <h3>Account Details</h3>
+                    <p>Account Holder: {account.accountHolderName}</p>
+                    <p>IBAN: {account.iban}</p>
+                    <p>BIC: {account.bic}</p>
+                </div>
+
+                <div className="carddetail">
+                    <h3>Card Details</h3>
+                    <p>Card Number: {account.cardNumber}</p>
+                    <p>Card Holder: {account.cardHolder}</p>
+                    <p>Expiry Date: {account.expiryDate}</p>
+                    <p>CVV: {account.cvv}</p>
+                    <p>PIN: {account.pin}</p>
+                </div>
+            </div>
         </div>
-    <div className="carddetail">
-        <h3>Card details</h3>
-        <p>Card Number: {account.cardNumber}</p>
-        <p>Card Holder: {account.cardHolder}</p>
-        <p>Expiry Date: {account.expiryDate}</p>
-        <p>CVV: {account.cvv}</p>
-        <p>PIN: {account.pin}</p>
-    </div>
-    </>
-)
-}
+    );
+    }

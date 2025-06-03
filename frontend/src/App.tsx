@@ -14,8 +14,9 @@ import SendMoney from "./page/SendMoney.tsx";
 function App() {
 
   return (
+
     <>
-      <h1>Hello</h1>
+        <div className="app-container">
         <Routes>
          <Route path ={"/"} element={<Home/>}/>
          <Route path={"/login"} element={<Login/>}/>
@@ -27,6 +28,7 @@ function App() {
           <Route path="/addmoney" element={<AddMoneyPayment/>}/>
             <Route path="/sendmoney" element={<SendMoney/>}/>
         </Routes>
+        </div>
     </>
   )
 }

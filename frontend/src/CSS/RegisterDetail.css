@@ -1,0 +1,130 @@
+
+/* 1) RESET & BOX‐SIZING */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    box-sizing: border-box;
+}
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+/* 2) FULL‐SCREEN WRAPPER (centers horizontally & vertically) */
+.checkout-wrapper {
+    height: 100vh;                  /* full viewport height */
+    display: flex;
+    justify-content: center;        /* center form horizontally */
+    align-items: center;            /* center form vertically */
+    background-color: #f0f2f5;      /* light grey background */
+    padding: 20px;                  /* prevents edge‐to‐edge on small screens */
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* 3) WHITE CARD (same as .auth-form) */
+.checkout-form {
+    --field-gap: 12px;              /* same gap variable you used elsewhere */
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    max-width: 450px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* 4) FORM TITLE */
+.checkout-form h2 {
+    margin-bottom: calc(var(--field-gap) * 3);
+    font-weight: 700;
+    font-size: 2rem;
+    color: #222;
+    text-align: center;
+}
+
+/* 5) GREY BLOCK AROUND ALL INPUTS */
+.detail-block {
+    padding: 15px 20px;
+    margin-bottom: calc(var(--field-gap) * 2);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fafafa;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* 6) INPUT FIELDS INSIDE .detail-block */
+.detail-block input {
+    width: 100%;
+    padding: 9px 10px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-bottom: var(--field-gap);
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.detail-block input:focus {
+    border-color: #4a90e2;
+    outline: none;
+}
+
+/* 7) ERROR MESSAGE (below the grey block) */
+.error-message {
+    color: #b00020;              /* strong red */
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: calc(var(--field-gap) * 2);
+}
+
+/* 8) SUBMIT BUTTON */
+.checkout-form button {
+    margin-top: calc(var(--field-gap) * 1.5);
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    background-color: #4a90e2;   /* same blue as RegisterAccount */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.checkout-form button:hover {
+    background-color: #357abd;   /* darker blue on hover */
+}
+
+/* 9) RESPONSIVE TWEAKS FOR SMALL SCREENS */
+@media (max-width: 480px) {
+    .checkout-form {
+        padding: 20px 20px;
+    }
+
+    .checkout-form h2 {
+        font-size: 1.8rem;
+        margin-bottom: 25px;
+    }
+
+    .detail-block {
+        padding: 12px 15px;
+    }
+
+    .detail-block input {
+        padding: 8px 9px;
+        font-size: 0.95rem;
+    }
+
+    .checkout-form button {
+        font-size: 0.95rem;
+        padding: 11px;
+    }
+}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import { registerUser } from "../service/apiService";
 import axios from "axios";
+import "../css/RegisterDetail.css";
 
 export default function RegisterDetail() {
 
@@ -47,50 +48,72 @@ export default function RegisterDetail() {
             if(axios.isAxiosError(err)) {setError(err.message || "registration failed")}
         }
     };
-
     return (
-        <div className="checkout-form">
-            <h2>Please enter registration details</h2>
+        <div className="auth-wrapper">
+            <div className="auth-form">
+                <h2>Please enter registration details</h2>
 
-            <input
-                type="text" placeholder="First Name *" value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-            />
-            <input
-                type="text" placeholder="Last Name *" value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-            />
-            <input
-                type="text" placeholder="Phone Number *" value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-            />
-            <input
-                type="text" placeholder="Street *" value={street}
-                onChange={(e) => setStreet(e.target.value)}
-            />
-            <input
-                type="text" placeholder="House Number *"  value={houseNumber}
-                onChange={(e) => setHouseNumber(e.target.value)}
-            />
-            <input
-                type="text" placeholder="Postal Code *" value={postalCode}
-                onChange={(e) => setPostalCode(e.target.value)}
-            />
-            <input
-                type="text" placeholder="City *" value={city}
-                onChange={(e) => setCity(e.target.value)}
-            />
-            <input
-                type="text" placeholder="Country *" value={country}
-                onChange={(e) => setCountry(e.target.value)}
-            />
-            <input
-                 type = "text" placeholder="Year of Birth" value = {yearOfBirth}
-                 onChange={(e) => setYearOfBirth(e.target.value)}
-            />
-            {error && <div style={{ color: "red" }}>{error}</div>}
+                <div className="detail-block">
+                    <input
+                        type="text"
+                        placeholder="First Name *"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Last Name *"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Phone Number *"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Street *"
+                        value={street}
+                        onChange={(e) => setStreet(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="House Number *"
+                        value={houseNumber}
+                        onChange={(e) => setHouseNumber(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Postal Code *"
+                        value={postalCode}
+                        onChange={(e) => setPostalCode(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="City *"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Country *"
+                        value={country}
+                        onChange={(e) => setCountry(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Year of Birth *"
+                        value={yearOfBirth}
+                        onChange={(e) => setYearOfBirth(e.target.value)}
+                    />
+                </div>
 
-            <button onClick={handleRegister}>Register & Continue</button>
+                {error && <div className="error-message">{error}</div>}
+
+                <button onClick={handleRegister}>Register &amp; Continue</button>
+            </div>
         </div>
     );
 }

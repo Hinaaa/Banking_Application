@@ -1,4 +1,6 @@
 import {useNavigate} from "react-router-dom";
+import heroImage from "../assets/images/HomeImage.png";
+import "../css/Home.css";
 
 export default function Home() {
 
@@ -12,12 +14,32 @@ const navigate = useNavigate()
 
     return (
         <>
-            <>Welcome to Home Page</>
-            <button onClick={handleLogin}>Login</button>
-            <button onClick={handleRegister}>Register</button>
+            <header className="header">
+                <h1 className="logo">MyBank</h1>
+                <nav className="nav-bar">
+                    <ul className="nav-links">
+                        <li><a href="/about">About Us</a></li>
+                        <li><button onClick={handleLogin} className="btn small">Login</button></li>
+                        <li><button onClick={handleRegister} className="btn small">Sign Up</button></li>
+                    </ul>
+                </nav>
+            </header>
+            <main>
+                <section className="hero-section">
+                    <div className="hero-left">
+                        <h2>Welcome to MyBank</h2>
+                        <h4>The Bank of Your Choice</h4>
+                        <p>
+                            Secure online banking. Manage your
+                            accounts, Instant Bank Transfers,
+                            Add and track your spending anytime.
+                        </p>
+                    </div>
+                    <div className="hero-right">
+                        <img src={heroImage} alt="Online banking services" />
+                    </div>
+                </section>
+            </main>
         </>
-    )
+    );
 }
-
-//const [email, setEmail] = useState("") //enter input field
-//onChange={(e) => setEmail(e.target.value)}

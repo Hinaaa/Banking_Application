@@ -1,0 +1,167 @@
+:root {
+    --primary-blue: #0052cc;
+    --primary-blue-light: #2a6fdb;
+    --background-light: #f5f7fa;
+    --white: #ffffff;
+    --text-dark: #212529;
+    --text-muted: #6c757d;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Ensure the html and body take full height */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-light);
+    color: var(--text-dark);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Wrapper that centers the form */
+.auth-wrapper {
+    display: flex;
+    justify-content: center; /* center horizontally */
+    align-items: center;     /* center vertically */
+    height: 100vh;           /* full viewport height */
+    width: 100vw;            /* full viewport width */
+    box-sizing: border-box;
+    background-color: var(--background-light); /* #f5f7fa light grey */
+    margin: 0;
+    padding: 1rem;
+}
+
+/* The form container */
+.auth-form {
+    background: var(--white);
+    padding: 2.5rem 3rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 82, 204, 0.15);
+    max-width: 400px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center; /* center title and button text */
+}
+
+/* Form heading */
+.auth-form h2 {
+    color: var(--primary-blue);
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Labels */
+.auth-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: left; /* keep label text left-aligned */
+}
+
+/* Input fields */
+.auth-form input[type="email"],
+.auth-form input[type="password"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.auth-form input[type="email"]:focus,
+.auth-form input[type="password"]:focus {
+    border-color: var(--primary-blue);
+    outline: none;
+}
+
+/* Submit button */
+.auth-form button {
+    width: 100%;
+    padding: 0.85rem;
+    font-size: 1.25rem;
+    border-radius: 8px;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(42, 111, 219, 0.5);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+}
+
+.auth-form button:hover,
+.auth-form button:focus {
+    background-color: var(--primary-blue-light);
+    box-shadow: 0 6px 16px rgba(42, 111, 219, 0.7);
+    outline: none;
+}
+
+/* Message styling */
+.message {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.message.success {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
+.message.error {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+.message.info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border: 1px solid #bee5eb;
+}
+
+/* Register link below the form */
+.register-link {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.register-link a {
+    color: var(--primary-blue);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.register-link a:hover,
+.register-link a:focus {
+    color: var(--primary-blue-light);
+    text-decoration: underline;
+}
+
+/* Responsive tweaks for very small screens */
+@media (max-width: 480px) {
+    .auth-form {
+        padding: 2rem 1.5rem;
+    }
+
+    .auth-form h2 {
+        font-size: 2.2rem;
+    }
+
+    .auth-form button {
+        font-size: 1.1rem;
+    }
+}
