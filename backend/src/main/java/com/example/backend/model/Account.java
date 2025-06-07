@@ -25,6 +25,8 @@ public class Account {
     private String expiryDate;
     private String cvv;
     private String pin;
+    private double accountBalance;
+    //apayment fk need to be added
 
 public Account() {} //constructor
 public Account(String accountHolderName, String iban, String bic, String cardNumber,
@@ -37,5 +39,6 @@ public Account(String accountHolderName, String iban, String bic, String cardNum
     this.expiryDate = expiryDate;
     this.cvv = cvv;
     this.pin = pin;
+    //paymentId as fk needed
 }
 }

@@ -1,22 +1,19 @@
 import {useEffect, useState} from "react"
-import type {AccountDetail} from "../service/types.ts"
+import type {AccountDetail} from "../types/AccountType.ts"
 import { getAccountDetails } from "../service/apiService.tsx"
 import { useSearchParams } from "react-router-dom";
 import "../css/ViewAccountDetail.css";
-//
-// type accountDetailProps = {
-//     user_id: number
-// };
+
 //export default function ViewAccountDetails(props:Readonly<accountDetailProps>){
 export default function ViewAccountDetails() {
     const [account, setAccount] = useState<AccountDetail | null>(null)
     const [error, setError] = useState("");
     const [searchParams] = useSearchParams();
-    const idParam = searchParams.get("user_id");
+    const idParam = searchParams.get("user_id"); //should be same as in backend cont4roller
     const numericId = idParam ? Number(idParam) : NaN;
     useEffect(() => {// Runs only once when the component opens
         if (!numericId || isNaN(numericId)) {
-            setError("Invalid or missing user_id in URL");
+            setError("Invalid or missing userId in URL");
             return;
         }async function fetchAccount() {  //async function to call the backend
             try {

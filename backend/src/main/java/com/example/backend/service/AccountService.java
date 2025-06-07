@@ -26,7 +26,7 @@ public class AccountService {
         }
         //if user already have account
         if (accountRepo.existsByUser(user)) { //existsByUser JPT function is any Account record where the foreign key to the User matches
-            return new Response("User already exists", "Info", user.getId(), true, true);
+            return new Response("User already exists", "Info", user.getId(),true, true);
         }
 
         //create link account, when user exists and account not exist so register account
@@ -64,12 +64,13 @@ public class AccountService {
                     account.getCvv(),
                     account.getPin()
             );
-            return new AccountDetailResponse("account details fetched successfully", "success", userId, true, accountDetail);
+            return new AccountDetailResponse("account details fetched successfully", "success", userId, account.getId(), true, accountDetail);
         } else
             return new AccountDetailResponse(
                     "No account found for user",
                     "error",
                     userId,
+                    null,
                     false, // hasAccount = false
                     null); // no AccountDetail to return
     }

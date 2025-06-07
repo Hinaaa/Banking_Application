@@ -112,7 +112,7 @@ export default function RegisterDetail() {
 
                 {error && <div className="error-message">{error}</div>}
 
-                <button onClick={handleRegister}>Register &amp; Continue</button>
+                <button onClick={handleRegister}>Register and Continue</button>
             </div>
         </div>
     );
