@@ -1,0 +1,201 @@
+:root {
+    --primary-blue: #0052cc;
+    --primary-blue-light: #2a6fdb;
+    --background-light: #f5f7fa;
+    --white: #ffffff;
+    --text-dark: #212529;
+    --text-muted: #6c757d;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    --light-blue-bg: #f0f4ff;
+    --light-border: #ccdfff;
+    --deep-blue: #003399;
+    --box-bg: #eef4ff;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--background-light);
+    color: var(--text-dark);
+}
+
+/* Container */
+.add-amount {
+    background: linear-gradient(135deg, var(--light-blue-bg), var(--white));
+    padding: 2.5rem;
+    max-width: 700px;
+    width: 100%;
+    margin: 2.5rem auto;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 82, 204, 0.15);
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Headings */
+.add-amount h2,
+.add-money-transaction-by-iban h3,
+.add-money-transaction-by-card h3 {
+    color: var(--text-dark);
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.add-amount h2 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.add-money-transaction-by-iban h3,
+.add-money-transaction-by-card h3 {
+    font-size: 1.25rem;
+    text-align: left;
+    margin-bottom: 0.8rem;
+}
+
+/* Universal input + button width & styling */
+.add-amount input,
+.add-amount button {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Text inputs */
+.add-amount input[type="text"],
+.add-amount input[type="number"] {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--light-border);
+    font-size: 1rem;
+    transition: 0.3s ease;
+}
+
+.add-amount input:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 5px rgba(0, 82, 204, 0.3);
+    outline: none;
+}
+
+/* Labels + Form sections */
+.amount-form,
+.reference-comments /* fixed class name */ {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+/* Reference-specific spacing */
+.reference-comments {
+    margin-top: 2rem;    /* space above reference */
+    margin-bottom: 0;    /* no extra bottom */
+}
+
+/* Labels */
+.add-amount label {
+    font-weight: 600;
+    color: var(--primary-blue);
+}
+
+/* Radio buttons vertical */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--primary-blue);
+}
+.radio-group input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary-blue);
+    margin: 0;
+}
+
+/* IBAN & Card Blocks */
+.add-money-transaction-by-iban,
+.add-money-transaction-by-card {
+    background: var(--box-bg);
+    padding: 1.2rem;
+    border-radius: 12px;
+    margin-top: 1.5rem;
+    box-shadow: inset 0 0 4px rgba(0, 82, 204, 0.1);
+}
+.add-money-transaction-by-iban input,
+.add-money-transaction-by-card input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--light-border);
+}
+
+/* Add Money button */
+.add-amount > button {
+    margin-top: 2rem;    /* space above button */
+    padding: 0.75rem;
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.add-amount > button:hover {
+    background-color: var(--primary-blue-light);
+    box-shadow: 0 4px 12px rgba(42, 111, 219, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .add-amount {
+        padding: 1.5rem;
+        margin: 1.5rem;
+    }
+    .add-amount h2 {
+        font-size: 1.6rem;
+    }
+    .radio-group {
+        gap: 0.75rem;
+    }
+}
+/* TransactionAddMoney.css */
+
+.balance-box {
+    border: 1px solid #aaccee;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 16px;
+    background-color: #e8f4fd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.balance-box label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #004d80;
+}
+
+.balance-box output {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #002f4b;
+}

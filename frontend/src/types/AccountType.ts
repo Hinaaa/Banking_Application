@@ -1,5 +1,5 @@
 export type AccountDetail = {
-    user_id: number;
+    userId: number;
     accountHolderName: string;
     iban: string;
     bic: string;
@@ -13,7 +13,8 @@ export type AccountDetail = {
 export type AccountDetailResponse = {
     message: string;
     messageType: "success" | "fail" | "error" | "info";
-    user_id: number;
+    userId: number;
+    accountId:number
     hasAccount: boolean;
     accountDetail: AccountDetail | null;
 };
