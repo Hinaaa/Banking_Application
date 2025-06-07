@@ -175,3 +175,27 @@ body {
         gap: 0.75rem;
     }
 }
+/* TransactionAddMoney.css */
+
+.balance-box {
+    border: 1px solid #aaccee;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 16px;
+    background-color: #e8f4fd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.balance-box label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #004d80;
+}
+
+.balance-box output {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #002f4b;
+}

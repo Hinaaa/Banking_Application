@@ -18,7 +18,7 @@
         const [cardHolder, setCardHolder] = useState("")
         const [expiryDate, setExpiryDate] = useState("")
         const [cvv, setCvv] = useState("")
-
+        const  [balance] =useState(0)
         const navigate = useNavigate() //for navigation
 
         //Message to display to user
@@ -132,6 +132,14 @@
         }
         return (
             <div className="add-amount">
+                <div className="balance-box">
+                    <label htmlFor="current-balance ">Current Balance:</label>
+                    <output id="current-balance">
+                        {balance !== null
+                            ? balance.toLocaleString(undefined, { style: 'currency', currency: 'EUR' })
+                            : '—'}
+                    </output>
+                </div>
                 <h2>Add Money to your Account</h2>
 
                 <div className="amount-form">
