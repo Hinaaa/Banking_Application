@@ -108,10 +108,20 @@ export async function getAccountDetails(user_id: number) {
     }
 }
 export async function Transaction(transactionData: Transactionrequest) { //TransactionDtoType defined in type and passed as parameter here as type is also export
-    try {
-        const response = await axios.post("/api/account/addMoney",//adding data related to an account: user>>account>>Transaction. Account is direct Fk. Transaction nested under account not user directly
-            transactionData) //Second parameter to axios.post. it stores input values sent from frontend. defined in main function parameter above
-        return response.data as { message: string} //.data = Builtin property. actual response body from backend e.g data: status:200 etc
+        try {
+            const response = await axios.post("/api/account/addMoney", transactionData);
+            return response.data as {
+                transactionId: number;
+                message?: string;
+                transactionStatus: string;
+                transactionType: string;
+                updatedBalance: number;
+                transactionDate: string;
+                transactionData: Transactionrequest;
+            };
+        // const response = await axios.post("/api/account/addMoney",//adding data related to an account: user>>account>>Transaction. Account is direct Fk. Transaction nested under account not user directly
+        //     transactionData) //Second parameter to axios.post. it stores input values sent from frontend. defined in main function parameter above
+        // return response.data as { id: number; message?: string }; //.data = Builtin property. actual response body from backend e.g data: status:200 etc
     } catch (err) {
         if(axios.isAxiosError(err)) {
 

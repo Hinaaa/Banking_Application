@@ -28,7 +28,7 @@ public class TransactionService {
                 .orElse(null);
         if (account == null) {
             return new TransactionResponse("Account not found",
-                    TransactionStatus.FAILED.name(), null, null, null, null);
+                    TransactionStatus.FAILED.name(), null,null, null, null, null);
         } //enum as string
 
         //fetch user from repo
@@ -51,6 +51,7 @@ public class TransactionService {
                 transactionDto.transactionType(),
                 account.getAccountBalance(),
                 transactionDto.transactionDate(),
-                transactionDto);
+                transactionDto,
+                transaction.getId());
     }
 }

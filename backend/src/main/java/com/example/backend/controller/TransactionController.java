@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.model.TransactionDto;
+import com.example.backend.model.TransactionResponse;
 import com.example.backend.repo.TransactionRepo;
 import com.example.backend.service.TransactionService;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +22,9 @@ public class TransactionController {
     }
     //Add Amount
     @PostMapping("/addMoney")
-    public ResponseEntity<String> addTransaction(@RequestBody TransactionDto transactionDto) {
-        transactionService.addTransaction(transactionDto);
-        return ResponseEntity.ok("Money added successfully");
+    public ResponseEntity<TransactionResponse> addTransaction(@RequestBody TransactionDto transactionDto) {//Receive the transaction data sent from frontend
+        TransactionResponse response = transactionService.addTransaction(transactionDto); //Pass the TransactionDto object to the service layer method
+        return ResponseEntity.ok(response); //return full response instead, frontend receives full transaction details
     }
 
     //Transfer Amount
