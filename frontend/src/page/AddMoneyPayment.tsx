@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import {getAccountDetails, Transaction} from "../service/apiService.tsx";
+import "../css/TransactionAddMoney.css";
 
 export default function AddMoneyPayment() {
     const [amount, setAmount] = useState(0)
@@ -115,7 +116,7 @@ export default function AddMoneyPayment() {
     }
     return (
         <div className="add-amount">
-            <h2>Add Money to your account</h2>
+            <h2>Add Money to your Account</h2>
 
             <div className="amount-form">
                 <label htmlFor="amount-label">Amount </label>
@@ -126,32 +127,34 @@ export default function AddMoneyPayment() {
                     onChange={(e) => setAmount(Number(e.target.value))}
                 />
 
-                <div>
-                    <label>
+                <div className="radio-group"> {/* Added class for styling */}
+                    <label htmlFor="bank-transfer-radio">
                         <input
+                            id="bank-transfer-radio" // **Added id for accessibility**
                             type="radio"
                             name="transactionType"
                             value="bankTransfer"
                             checked={selectTransactionType === "bankTransfer"}
                             onChange={(e) => setSelectTransactionType(e.target.value as "bankTransfer")}
                         />
-                        Add via Bank Transfer
+                        <span>Add via Bank Transfer</span>
                     </label>
-                    <label>
+                    <label htmlFor="card-transfer-radio">
                         <input
+                            id="card-transfer-radio" // **Added id for accessibility**
                             type="radio"
-                            name="cardTransfer"
+                            name="transactionType"
                             value="cardTransfer"
                             checked={selectTransactionType === "cardTransfer"}
                             onChange={(e) => setSelectTransactionType(e.target.value as "cardTransfer")}
                         />
-                        Add via Card Details
+                        <span>Add via Card Details</span>
                     </label>
                 </div>
 
                 {selectTransactionType === "bankTransfer" && (
                     <div className="add-money-transaction-by-iban">
-                        <h3>IBAN Details of Account from Which You want to Transfer Money to Your Accoun</h3>
+                        <h3>IBAN Details of Account from Which You want to Transfer Money to Your Account</h3>
                         <input
                             type="text"
                             placeholder="Account Holder Name *"
@@ -202,7 +205,7 @@ export default function AddMoneyPayment() {
                     </div>
                 )}
             </div>
-            <div className="refrence-comments">
+            <div className="reference-comments">
                 <label htmlFor="reference-comments-label">Reference </label>
                 <input
                     type="text"
