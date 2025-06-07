@@ -9,7 +9,7 @@ import RegisterAccount from "./page/RegisterAccount.tsx";
 import Dashboard from "./page/Dashboard.tsx";
 import ViewAccountDetails from "./page/ViewAccountDetails.tsx";
 import AddMoneyPayment from "./page/AddMoneyPayment.tsx";
-import SendMoney from "./page/SendMoney.tsx";
+import TransferMoneyPayment from "./page/TransferMoneyPayment.tsx";
 
 function App() {
 
@@ -26,7 +26,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/viewaccountdetails" element={<ViewAccountDetails />} />
           <Route path="/addmoney" element={<AddMoneyPayment/>}/>
-            <Route path="/sendmoney" element={<SendMoney/>}/>
+            <Route path="/sendmoney" element={<TransferMoneyPayment/>}/>
         </Routes>
         </div>
     </>

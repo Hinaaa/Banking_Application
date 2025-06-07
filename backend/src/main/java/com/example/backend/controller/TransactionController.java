@@ -20,7 +20,7 @@ public class TransactionController {
         this.transactionRepo = transactionRepo;
     }
     //Add Amount
-    @PostMapping("/add")
+    @PostMapping("/addMoney")
     public ResponseEntity<String> addTransaction(@RequestBody TransactionDto transactionDto) {
         transactionService.addTransaction(transactionDto);
         return ResponseEntity.ok("Money added successfully");

@@ -8,6 +8,6 @@ public record TransactionResponse(
         String transactionType,
         Double updatedBalance,
         Date transactionDate,
-        TransactionDto transactionData
+        TransactionDto transactionData //later for payment view use
 ) {
 }

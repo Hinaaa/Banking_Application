@@ -1,11 +1,12 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
+import {getAccountDetails, Transaction} from "../service/apiService.tsx";
 
 export default function AddMoneyPayment() {
     const [amount, setAmount] = useState(0)
-    const navigate = useNavigate()
+    const [reference, setReference] = useState("")
     //Radio Button
-    const [selectTransactionType, setSelectTransactionType] = useState("")
+    const [selectTransactionType, setSelectTransactionType] = useState<"bankTransfer" | "cardTransfer" | "">("");
     //IBAN Details
     const [accountHolderName, setAccountHolderName] = useState("")
     const [iban, setIban] = useState("")
@@ -17,48 +18,113 @@ export default function AddMoneyPayment() {
     const [expiryDate, setExpiryDate] = useState("")
     const [cvv, setCvv] = useState("")
 
+    const navigate = useNavigate() //for navigation
+
     //Message to display to user
-    const [responseMessage, setResponseMessage] = useState<{ message: string, type: "Success" | "error" | "info" } | null>(null);
+    const [responseMessage, setResponseMessage] = useState<{
+        message: string,
+        type: "Success" | "error" | "info"
+    } | null>(null);
+
+    const [loading, setLoading] = useState(false) //for loading while account fetching
+    const [accountId, setAccountId] = useState(0)
+    const [userId, setUserId] = useState(0)
+
+
+    // fetch the user’s primary accountId
+    useEffect(() => {
+        const storeUserId = localStorage.getItem("currentUserId") //get userId from localStorage means stored when login
+        if (!storeUserId) {
+            setResponseMessage({message: "User not Found", type: "error"})
+            return
+        }
+
+        const userId = Number(storeUserId) //login user id stored, converting to number as required by api
+        setUserId(userId)
+        setLoading(true) //loading
+
+        getAccountDetails(userId) //get account detail as per user id(getAccountDetails imported from service), account must exist, that handled in dashboard
+            .then((accountDetails) => {
+                setAccountId(accountDetails.accountId)
+            })
+            .catch((err: unknown) => {
+                if (err instanceof Error) {
+                    setResponseMessage({message: err.message, type: "error"});
+                } else {
+                    setResponseMessage({message: "account not found", type: "error"})
+                }
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+    }, []);
+
+    //storing from front end, building to get a field: transactionFromToAccountDetails because set in backend to store in table
+    const detailsOtherAccOrCard =
+        selectTransactionType === "bankTransfer"
+            ? `Account Holder: ${accountHolderName}, IBAN: ${iban}, BIC: ${bic}`
+            : `Card Number: ${cardNumber}, Card Holder: ${cardHolder}, Expiry: ${expiryDate}`;
 
     //Handle adding account details
-    const handleAddMoney = () => {
+    const handleAddMoney = async () => {
         if (!selectTransactionType) {
-            setResponseMessage({ message: "Please select the transaction type", type: "error" })
+            setResponseMessage({message: "Please select the transaction type", type: "error"})
             return;
         }
         if (amount <= 0) {
-            setResponseMessage({ message: "Please enter a valid amount", type: "error" });
+            setResponseMessage({message: "Please enter a valid amount", type: "error"});
             return;
         }
         if (selectTransactionType === "bankTransfer") {
-            if (!accountHolderName || !iban || !bic || !cardNumber || !cardHolder || !expiryDate || !cvv) {
+            if (!accountHolderName || !iban || !bic) {
                 setResponseMessage({message: "Please fill all required fields", type: "error"})
                 return;
             }
         }
         if (selectTransactionType === "cardTransfer") {
             if (!cardNumber || !cardHolder || !expiryDate || !cvv) {
-                setResponseMessage({ message: "Please fill all required card fields", type: "error" });
+                setResponseMessage({message: "Please fill all required card fields", type: "error"});
                 return;
             }
         }
+        //building payload: to send back to backed
+        const payload = {
+            userId,
+            accountId,
+            amount,
+            description: reference,
+            transactionType: selectTransactionType, // correct key matching Transactionrequest type
+            transactionFromToAccountDetails: detailsOtherAccOrCard,
+        }
+        //axios
+        try {
+            await Transaction(payload) //dto ,payload which is being sent from frontend
             //when all validation passed
-            setResponseMessage({ message: "Transaction initiated successfully", type: "Success" })
+            setResponseMessage({
+                message: "Transaction successful. Amount has been added to your Account",
+                type: "Success"
+            })
             navigate("/addmoney")
+        } catch (error: unknown) {
+            if (error instanceof Error && error.message) {
+                setResponseMessage({message: error.message, type: "error"}); // Display actual error message
+            } else {
+                setResponseMessage({message: "Transaction failed. Please try again.", type: "error"}); // Fallback message
+            }
+        }
     }
-        return (
-            <div className="add-amount">
-                <h2>Add Money to your account</h2>
+    return (
+        <div className="add-amount">
+            <h2>Add Money to your account</h2>
 
-                <div className="amount-form">
-                    <label htmlFor="amount-label">Add Amount</label>
-                    <input
-                        type="number"
-                        placeholder="Amount to add"
-                        value={amount}
-                        onChange={(e) => setAmount(Number(e.target.value))}
-                    />
-                </div>
+            <div className="amount-form">
+                <label htmlFor="amount-label">Amount </label>
+                <input
+                    type="number"
+                    placeholder="Amount to add"
+                    value={amount}
+                    onChange={(e) => setAmount(Number(e.target.value))}
+                />
 
                 <div>
                     <label>
@@ -67,7 +133,7 @@ export default function AddMoneyPayment() {
                             name="transactionType"
                             value="bankTransfer"
                             checked={selectTransactionType === "bankTransfer"}
-                            onChange={(e) => setSelectTransactionType(e.target.value)}
+                            onChange={(e) => setSelectTransactionType(e.target.value as "bankTransfer")}
                         />
                         Add via Bank Transfer
                     </label>
@@ -77,7 +143,7 @@ export default function AddMoneyPayment() {
                             name="cardTransfer"
                             value="cardTransfer"
                             checked={selectTransactionType === "cardTransfer"}
-                            onChange={(e) => setSelectTransactionType(e.target.value)}
+                            onChange={(e) => setSelectTransactionType(e.target.value as "cardTransfer")}
                         />
                         Add via Card Details
                     </label>
@@ -135,13 +201,24 @@ export default function AddMoneyPayment() {
                         />
                     </div>
                 )}
-                <button onClick={handleAddMoney}>Add Money</button>
-
-                {responseMessage && (
-                    <div style={{ color: responseMessage.type === "error" ? "red" : "green" }}>
-                        {responseMessage.message}
-                    </div>
-                )}
             </div>
-        );
-    }
+            <div className="refrence-comments">
+                <label htmlFor="reference-comments-label">Reference </label>
+                <input
+                    type="text"
+                    placeholder="Reference comments"
+                    value={reference}
+                    onChange={(e) => setReference(String(e.target.value))}
+                />
+            </div>
+            {loading && <p>Loading account details...</p>}
+            <button onClick={handleAddMoney}>Add Money</button>
+
+            {responseMessage && (
+                <div style={{color: responseMessage.type === "error" ? "red" : "green"}}>
+                    {responseMessage.message}
+                </div>
+            )}
+        </div>
+    );
+}

@@ -1,5 +1,6 @@
 import axios from "axios";
-import type {AccountDetailResponse} from "./types.ts";
+import type {AccountDetailResponse} from "../types/AccountType.ts";
+import type {Transactionrequest} from "../types/TransactionType.ts";
 
 //register a new user, sends input detail to backend
 export async function registerUser(registrationDetails: {
@@ -85,7 +86,7 @@ export async function registerAccountDetails(accountData: {
 export async function getAccountDetails(user_id: number) {
     try {
         const response = await axios.get("/api/account/viewaccountdetails", {
-            params: {user_id},
+            params: {user_id}, //controller expect user_id so this name should be same as in controller
         })
         return response.data as AccountDetailResponse
     } catch(err) {
@@ -104,5 +105,26 @@ export async function getAccountDetails(user_id: number) {
             throw new Error("Error: Could not connect to backend");
         }
         throw new Error("Unknown error occurred");
+    }
+}
+export async function Transaction(transactionData: Transactionrequest) { //TransactionDtoType defined in type and passed as parameter here as type is also export
+    try {
+        const response = await axios.post("/api/account/addMoney",//adding data related to an account: user>>account>>Transaction. Account is direct Fk. Transaction nested under account not user directly
+            transactionData) //Second parameter to axios.post. it stores input values sent from frontend. defined in main function parameter above
+        return response.data as { message: string} //.data = Builtin property. actual response body from backend e.g data: status:200 etc
+    } catch (err) {
+        if(axios.isAxiosError(err)) {
+
+            if (err.response?.data && typeof err.response.data === "object" && "message" in err.response.data) { // if backend returned error object with message
+                const backendMessage = (err.response.data as { message: string }).message; //Backend returned an object with a message(like { message: "Invalid IBAN" }).
+                throw new Error(backendMessage); //show backend message
+            }
+            if (typeof err.response?.data === "string") {
+                throw new Error(err.response.data); //message from backend error message
+            }
+            // Generic backend connection error if no message
+            throw new Error("Error: Could not connect to backend"); //when not from backend
+        }
+        throw new Error("Unknown error occurred");// Unknown error when not from axios
     }
 }

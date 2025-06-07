@@ -1,4 +1,4 @@
-export default function SendMoney() {
+export default function TransferMoneyPayment() {
     return(
         <>
         <h1>Send Money</h1>

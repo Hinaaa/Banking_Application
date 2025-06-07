@@ -13,5 +13,6 @@ public record TransactionDto(
         String transactionType, //added or transferred
         String transactionFromToAccountDetails, //transferred from acc/card: acc card detail or transferred to
         Date transactionDate,
-        TransactionStatus status) {
+        TransactionStatus status
+) {
 }
