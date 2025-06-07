@@ -223,5 +223,5 @@ export default function AddMoneyPayment() {
                 </div>
             )}
         </div>
-    );
+    )
 }
