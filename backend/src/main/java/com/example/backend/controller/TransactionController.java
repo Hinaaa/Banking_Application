@@ -25,6 +25,7 @@ public class TransactionController {
         transactionService.addTransaction(transactionDto);
         return ResponseEntity.ok("Money added successfully");
     }
+
     //Transfer Amount
     @PostMapping("/transfer")
     public ResponseEntity<String> transferTransaction(@RequestBody TransactionDto transactionDto) {
