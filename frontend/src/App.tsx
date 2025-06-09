@@ -27,7 +27,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/viewaccountdetails" element={<ViewAccountDetails />} />
           <Route path="/addmoney" element={<AddMoneyPayment/>}/>
-          <Route path="/sendmoney" element={<TransferMoneyPayment/>}/>
+          <Route path="/transfermoney" element={<TransferMoneyPayment/>}/>
           <Route path="/transactionsuccessful" element={<TransactionSuccessful/>}/>
         </Routes>
         </div>

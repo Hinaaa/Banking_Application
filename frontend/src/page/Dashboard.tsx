@@ -17,15 +17,15 @@ export default function Dashboard() {
         navigate("/addmoney")
     }
     //send Moeny
-    const handleSendMoneyPayment = () => {
-        navigate("/sendmoney")
+    const handleTransferMoneyPayment = () => {
+        navigate("/transfermoney")
     }
     return (
         <>
             <h1>Welcome to your Dashboard</h1>
             <button onClick={handleViewAccountDetails}>View Account Details</button>
             <button onClick={handleAddMoneyPayment}>Add Money</button>
-            <button onClick={handleSendMoneyPayment}>Send Money</button>
+            <button onClick={handleTransferMoneyPayment}>Transfer Money</button>
             <h1>Transactions: </h1>
         </>
     )

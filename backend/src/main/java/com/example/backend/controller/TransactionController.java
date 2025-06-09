@@ -26,11 +26,10 @@ public class TransactionController {
         TransactionResponse response = transactionService.addTransaction(transactionDto); //Pass the TransactionDto object to the service layer method
         return ResponseEntity.ok(response); //return full response instead, frontend receives full transaction details
     }
-
-    //Transfer Amount
-    @PostMapping("/transfer")
-    public ResponseEntity<String> transferTransaction(@RequestBody TransactionDto transactionDto) {
-        //transactionService.transferTransaction(transactionDto);
-        return ResponseEntity.ok("Money transferred successfully");
+    //transferMoney
+    @PostMapping("/transfermoney")
+    public ResponseEntity<TransactionResponse> transferTransaction(@RequestBody TransactionDto transactionDto) {
+        TransactionResponse response = transactionService.transferTransaction(transactionDto);
+        return ResponseEntity.ok(response);
     }
 }
