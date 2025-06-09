@@ -31,9 +31,7 @@ public class TransactionService {
             return new TransactionResponse("Account not found",
                     TransactionStatus.FAILED.name(), null,null, null, null, null);
         } //enum as string
-
-        //fetch user from repo
-        User user = userRepo.getById(transactionDto.userId());
+        User user = userRepo.getById(transactionDto.userId());//fetch user from repo
         Transaction transaction = new Transaction();
         transaction.setUser(user); //User already set but still have to set it here with account in account table
         transaction.setAccount(account); //Assigns full Account entity to the transaction to link it to the account in the DB via FK
@@ -58,5 +56,45 @@ public class TransactionService {
     //reusing balance from account
     public AccountBalanceResponse getUserBalance(Long userId) {
         return accountService.viewAccountBalance(userId);
+    }
+    //Transfer amount
+    public TransactionResponse transferTransaction(TransactionDto transactionDto) {
+        Account account = accountRepo.findById(transactionDto.accountId())//In transactionDto account id has been searched and again that account Id complete Account entity tfrom Account table has been fetched?
+                //This handles throw Response now: .orElseThrow(() -> new RuntimeException("Account not Found"));
+                .orElse(null);
+        if (account == null) {
+            return new TransactionResponse("Account not found",
+                    TransactionStatus.FAILED.name(), null, null, null, null, null);
+        } //enum as string
+        User user = userRepo.getById(transactionDto.userId());//fetch user from repo
+        Transaction transaction = new Transaction();
+        transaction.setUser(user); //User already set but still have to set it here with account in account table
+        transaction.setAccount(account); //Assigns full Account entity to the transaction to link it to the account in the DB via FK
+        transaction.setAmount(transactionDto.amount()); //Transaction column set here because it is a transaction service
+        transaction.setDescription(transactionDto.description());
+        transaction.setTransactionType(transactionDto.transactionType());
+        transaction.setTransactionDate(transactionDto.transactionDate());
+        transaction.setStatus(TransactionStatus.SUCCESS);
+        transaction.setTransactionFromToAccountDetails(transactionDto.transactionFromToAccountDetails());
+
+        //Update Account Balance
+        if (account.getAccountBalance() >= transactionDto.amount()) {
+            account.setAccountBalance(account.getAccountBalance() - transactionDto.amount());
+            accountRepo.save(account);//balance updated in table Account
+            transactionRepo.save(transaction); //saving transaction
+            return new TransactionResponse("Transaction Successful", TransactionStatus.SUCCESS.name(),
+                    transactionDto.transactionType(),
+                    account.getAccountBalance(),
+                    transactionDto.transactionDate(),
+                    transactionDto,
+                    transaction.getId());
+        }
+        else
+            return new TransactionResponse("Transaction Failed: Account Balance low to transfer requested amount", TransactionStatus.FAILED.name(),
+                    transactionDto.transactionType(),
+                    account.getAccountBalance(),
+                    transactionDto.transactionDate(),
+                    transactionDto,
+                    transaction.getId());
     }
 }
