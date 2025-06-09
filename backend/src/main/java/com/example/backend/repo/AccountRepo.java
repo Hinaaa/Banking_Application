@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface AccountRepo extends JpaRepository<Account, Long> {
     boolean existsByUser(User user); //check if account exists. exists an Account linked to the given User
     Optional<Account> findByUserId(Long userId); // fetch account by user
+
+    Long userId(Long userId);
 }

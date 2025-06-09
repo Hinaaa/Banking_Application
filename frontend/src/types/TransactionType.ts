@@ -19,6 +19,11 @@ export type TransactionDto = { //TransactionDto passed in response
     transactionDate: Date //this is generated at backend already the time of entry
     status: "SUCCESS" | "FAILED" | "PENDING" | "Error";//this defined in enum at backend
 }
+export type AccountBalanceResponse = {
+    userId: number
+    accountId: number
+    accountBalance: number
+}
 
 //Exactly matches backend TransactionResponse
 export type TransactionResponse = { //is it defined for backend>
@@ -27,6 +32,7 @@ export type TransactionResponse = { //is it defined for backend>
     transactionType: "success" | "fail" | "error" | "info"; //Also a controlled set of values uses by frontend to display or logic
     updatedBalance: number; //Defined separately as well other than below dto to define key summary fields like total amount, date, status etc separately(A good Practise)
     transactionDate: Date;
+    transactionId: number;
     transactionData: Transactionrequest //TransactionDto should be same at backend
 };
 

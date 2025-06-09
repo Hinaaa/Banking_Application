@@ -1,6 +1,6 @@
     import {useEffect, useState} from "react";
     import { useNavigate } from "react-router-dom";
-    import {getAccountDetails, Transaction} from "../service/apiService.tsx";
+    import {fetchCurrentBalance, getAccountDetails, Transaction} from "../service/apiService.tsx";
     import "../css/TransactionAddMoney.css";
 
     export default function AddMoneyPayment() {
@@ -18,20 +18,29 @@
         const [cardHolder, setCardHolder] = useState("")
         const [expiryDate, setExpiryDate] = useState("")
         const [cvv, setCvv] = useState("")
-        const  [balance] =useState(0)
         const navigate = useNavigate() //for navigation
 
         //Message to display to user
         const [responseMessage, setResponseMessage] = useState<{
             message: string,
-            type: "Success" | "error" | "info"
+            type: "success" | "error" | "info"
         } | null>(null);
 
         const [loading, setLoading] = useState(false) //for loading while account fetching
         const [accountId, setAccountId] = useState(0)
         const [userId, setUserId] = useState(0)
+//        const [balance, setBalance] = useState<number>(0)
 
+        const [balance, setBalance] = useState(0);
 
+// ① On mount (or when userId/accountId known), pull the balance:
+        useEffect(() => {
+            const uid = Number(localStorage.getItem("currentUserId"));
+            if (!uid) return;
+            fetchCurrentBalance(uid)
+                .then(b => setBalance(b.accountBalance))
+                .catch(() => setBalance(0));
+        }, []);
         // fetch the user’s primary accountId
         useEffect(() => {
             const storeUserId = localStorage.getItem("currentUserId") //get userId from localStorage means stored when login
@@ -47,6 +56,8 @@
             getAccountDetails(userId) //get account detail as per user id(getAccountDetails imported from service), account must exist, that handled in dashboard
                 .then((accountDetails) => {
                     setAccountId(accountDetails.accountId)
+                   // setBalance(accountDetails.accountBalance);
+                   // localStorage.setItem("currentBalance", accountDetails.accountBalance.toString());
                 })
                 .catch((err: unknown) => {
                     if (err instanceof Error) {
@@ -94,23 +105,25 @@
                 accountId,
                 amount,
                 description: reference,
-                transactionType: selectTransactionType, // correct key matching Transactionrequest type
+                transactionType: selectTransactionType,
                 transactionFromToAccountDetails: detailsOtherAccOrCard,
             }
+            // const newTx = await Transaction(payload);
+            // setBalance(newTx.updatedBalance);
+
             //axios
             try {
-              //  const newTransaction = await Transaction(payload) //dto ,payload which is being sent from frontend
-                const newTransaction = await Transaction(payload);
-                console.log("Check this newTransaction:", newTransaction);
-                // now newTransaction.id is your auto-generated ID
-
+                const newTransaction = await Transaction(payload); // Call API after building payload
+                setBalance(newTransaction.updatedBalance);
+                const key = `currentBalance_${accountId}`;
+                localStorage.setItem(key, newTransaction.updatedBalance.toString());
                 //when all validation passed
                 setResponseMessage({
                     message: "Transaction successful. Amount has been added to your Account",
-                    type: "Success"
-                })
-                //send id to next page to show
+                    type: "success"
+                });
 
+                //send id to next page to show
                 if (newTransaction && newTransaction.transactionId !== undefined && newTransaction.transactionId !== null) {
                     localStorage.setItem("lastTransactionId", newTransaction.transactionId.toString());
                     navigate("/transactionsuccessful", {

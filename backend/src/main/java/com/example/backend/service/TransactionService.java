@@ -13,12 +13,13 @@ public class TransactionService {
     private final UserRepo userRepo;
     private final TransactionRepo transactionRepo;
     private final AccountRepo accountRepo;
-
+    private final AccountService accountService;
     // Constructor injection
-    public TransactionService(TransactionRepo transactionRepo, AccountRepo accountRepo, UserRepo userRepo) {
+    public TransactionService(TransactionRepo transactionRepo, AccountRepo accountRepo, UserRepo userRepo, AccountService accountService) {
         this.transactionRepo = transactionRepo;
         this.accountRepo = accountRepo;
         this.userRepo = userRepo;
+        this.accountService = accountService;
     }
 
     public TransactionResponse addTransaction(TransactionDto transactionDto) {
@@ -53,5 +54,9 @@ public class TransactionService {
                 transactionDto.transactionDate(),
                 transactionDto,
                 transaction.getId());
+    }
+    //reusing balance from account
+    public AccountBalanceResponse getUserBalance(Long userId) {
+        return accountService.viewAccountBalance(userId);
     }
 }

@@ -11,7 +11,6 @@ import java.util.Optional;
 public class AccountService {
     private final AccountRepo accountRepo; //inject account repo
     private final UserRepo userRepo; //inject user repo
-
     public AccountService(AccountRepo accountRepo, UserRepo userRepo) {
         this.accountRepo = accountRepo;
         this.userRepo = userRepo;
@@ -50,7 +49,7 @@ public class AccountService {
         //if user exists - save side check this
         Optional<Account> optionalAccount = accountRepo.findByUserId(userId);
 
-        // If not present, return a response
+        // If account present
         if (optionalAccount.isPresent()) {
             Account account = optionalAccount.get(); // Directly retrieve account. Spring Data translated to SELECT * FROM accounts WHERE user_id = :userId
             AccountDetail accountDetail = new AccountDetail( //Map Account entity to AccountDetail Dto
@@ -74,4 +73,18 @@ public class AccountService {
                     false, // hasAccount = false
                     null); // no AccountDetail to return
     }
+    public AccountBalanceResponse viewAccountBalance(Long userId) {
+        Optional<Account> optionalAccount = accountRepo.findByUserId(userId);
+        if(optionalAccount.isPresent()) {
+            Account userAccount = optionalAccount.get();
+            return new AccountBalanceResponse(
+                    userId,
+                    userAccount.getId(),
+                    userAccount.getAccountBalance()
+            );
+        } else {
+           return new AccountBalanceResponse(userId,null,0);
+        }
+    }
 }
+
