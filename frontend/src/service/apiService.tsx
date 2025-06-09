@@ -1,6 +1,6 @@
 import axios from "axios";
 import type {AccountDetailResponse} from "../types/AccountType.ts";
-import type {Transactionrequest} from "../types/TransactionType.ts";
+import type {AccountBalanceResponse, Transactionrequest} from "../types/TransactionType.ts";
 
 //register a new user, sends input detail to backend
 export async function registerUser(registrationDetails: {
@@ -137,4 +137,8 @@ export async function Transaction(transactionData: Transactionrequest) { //Trans
         }
         throw new Error("Unknown error occurred");// Unknown error when not from axios
     }
+}
+export async function fetchCurrentBalance(userId: number): Promise<AccountBalanceResponse> {
+    const resp = await axios.get("/api/account/addMoney", { params: { userId } });
+    return resp.data;
 }

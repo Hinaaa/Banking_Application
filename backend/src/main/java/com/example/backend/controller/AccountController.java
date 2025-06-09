@@ -22,6 +22,7 @@ public class AccountController {
     }
     @GetMapping("/viewaccountdetails")
     public ResponseEntity<AccountDetailResponse> viewAccountDetails(@RequestParam("user_id") Long user_id) { //GET /api/account/viewaccountdetails?user_id=123
-        return  ResponseEntity.ok(accountService.viewAccountDetails(user_id));
+        return ResponseEntity.ok(accountService.viewAccountDetails(user_id));
     }
+ //controller not needed for account balance because I'm not navigating to other page, it will be a ready only field on pages like dashboard, Transaction(add money and Send money)
 }
