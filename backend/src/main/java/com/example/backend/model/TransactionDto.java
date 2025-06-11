@@ -1,13 +1,14 @@
 package com.example.backend.model;
 
-import org.hibernate.resource.transaction.spi.TransactionStatus;
+import com.example.backend.enums.TransactionStatus;
 
 import java.util.Date;
 
 public record TransactionDto(
         Long userId,
         Long accountId,
-        Long accountBalance, //this should be sent from account table later - to view current account
+        Long id,
+        double accountBalance, //this should be sent from account table later - to view current account
         Double amount,
         String description, //example amount added in account or amount transferred from account
         String transactionType, //added or transferred
