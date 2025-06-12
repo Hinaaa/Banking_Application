@@ -69,16 +69,25 @@ export default function Dashboard() {
     return (
         <>
             {/*Account Detail*/}
-            <h1>Welcome to your Dashboard</h1>
-            <div className="account-detail">
-                <p><strong>{accountInfo.accountHolderName}</strong></p>
-                <p><strong>{accountInfo.iban}</strong></p>
-                <p><strong>{accountInfo.bic}</strong></p>
-                <p><strong>{accountInfo.accountBalance}</strong></p>
-            </div>
+                <h1>Welcome to your Dashboard</h1>
+
+                {/* Top row: account details left, buttons right */}
+                <div className="dashboard-top">
+                    <div className="account-detail">
+                        <p><strong>Name: {accountInfo.accountHolderName}</strong></p>
+                        <p><strong>IBAN: {accountInfo.iban}</strong></p>
+                        <p><strong>BIC: {accountInfo.bic}</strong></p>
+                        <p><strong>Total Account Balance: {accountInfo.accountBalance}</strong></p>
+                    </div>
+                    {/*button actions and navigations from dashboard*/}
+                    <div className="handle-buttons">
+                        <button onClick={handleViewAccountDetails}>View Account Details</button>
+                        <button onClick={handleAddMoneyPayment}>Add Money</button>
+                        <button onClick={handleTransferMoneyPayment}>Transfer Money</button>
+                    </div>
+                </div>
 
             {/*Transactions*/}
-            {/*button actions and navigations from dashboard*/}
             <h3>Transactions: </h3>
             {Array.isArray(transactionDashboard) && transactionDashboard.length === 0 ? (
                 <p>No transactions to show.</p>
@@ -112,11 +121,6 @@ export default function Dashboard() {
                     </tbody>
                 </table>
             )}
-            <div className="hanlde-buttons">
-                <button onClick={handleViewAccountDetails}>View Account Details</button>
-                <button onClick={handleAddMoneyPayment}>Add Money</button>
-                <button onClick={handleTransferMoneyPayment}>Transfer Money</button>
-            </div>
         </>
     )
 }
