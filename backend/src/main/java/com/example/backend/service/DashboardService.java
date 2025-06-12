@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class DashboardService {
-    private UserRepo userRepo;
-    private TransactionRepo transactionRepo;
-    private AccountRepo accountRepo;
+    private final UserRepo userRepo;
+    private final TransactionRepo transactionRepo;
+    private final AccountRepo accountRepo;
 
     public DashboardService(UserRepo userRepo, TransactionRepo transactionRepo, AccountRepo accountRepo) {
         this.userRepo = userRepo;
@@ -52,7 +52,7 @@ public class DashboardService {
                 account.getAccountHolderName(),
                 account.getIban(),
                 account.getBic() //these not methods from dtos, the value is just passing into the record constructor but accessing it from an Account entity, which uses Lombok @Getter getBic not bic() of record
-        //Fields can be reduce while mapping i.e. more fields can exist in Dto
+        //Fields can be reduced while mapping i.e. more fields can exist in Dto
         );
         return new DashboardResponse(userId,accountInfo,transactionData);
     }
