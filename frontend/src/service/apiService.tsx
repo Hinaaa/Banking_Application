@@ -1,6 +1,7 @@
 import axios from "axios";
 import type {AccountDetailResponse} from "../types/AccountType.ts";
 import type {AccountBalanceResponse, Transactionrequest} from "../types/TransactionType.ts";
+import type {DashboardResponse} from "../types/DashboardType.ts";
 
 //register a new user, sends input detail to backend
 export async function registerUser(registrationDetails: {
@@ -107,6 +108,32 @@ export async function getAccountDetails(user_id: number) {
         throw new Error("Unknown error occurred");
     }
 }
+//Dashboard
+export async function fetchDashboard(userId: number): Promise<DashboardResponse> {
+    try {
+        const response = await axios.get("/api/account/dashboard", {
+            params: { userId },
+        });
+        return response.data as DashboardResponse;
+    } catch (err) {
+        if (axios.isAxiosError(err)) {
+            if (
+                err.response?.data &&
+                typeof err.response.data === "object" &&
+                "message" in err.response.data
+            ) {
+                const backendMessage = (err.response.data as { message: string }).message;
+                throw new Error(backendMessage);
+            }
+            if (typeof err.response?.data === "string") {
+                throw new Error(err.response.data);
+            }
+            throw new Error("Error: Could not connect to backend");
+        }
+        throw new Error("Unknown error occurred");
+    }
+}
+//Transaction
 export async function Transaction(transactionData: Transactionrequest) { //TransactionDtoType defined in type and passed as parameter here as type is also export
         try {
             const response = await axios.post("/api/account/addMoney", transactionData);
