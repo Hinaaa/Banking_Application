@@ -20,75 +20,84 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Wrapper that centers the form */
+/* Wrapper centers the login form */
 .auth-wrapper {
     display: flex;
-    justify-content: center; /* center horizontally */
-    align-items: center;     /* center vertically */
-    height: 100vh;           /* full viewport height */
-    width: 100vw;            /* full viewport width */
-    box-sizing: border-box;
-    background-color: var(--background-light); /* #f5f7fa light grey */
-    margin: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
     padding: 1rem;
+    box-sizing: border-box;
+    background-color: var(--background-light);
 }
 
-/* The form container */
+/* The login form container */
 .auth-form {
     background: var(--white);
-    padding: 2.5rem 3rem;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 82, 204, 0.15);
+    padding: 3rem 3rem 2rem 3rem;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0, 82, 204, 0.15);
     max-width: 400px;
     width: 100%;
     box-sizing: border-box;
-    text-align: center; /* center title and button text */
+    text-align: center;
+    transition: transform 0.3s ease;
 }
 
-/* Form heading */
+.auth-form:hover {
+    transform: translateY(-5px);
+}
+
+/* Heading */
 .auth-form h2 {
     color: var(--primary-blue);
-    font-size: 2.8rem;
-    margin-bottom: 1.5rem;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 /* Labels */
 .auth-form label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     font-weight: 600;
-    font-size: 1rem;
-    text-align: left; /* keep label text left-aligned */
+    font-size: 1.1rem;
+    text-align: left;
+    color: var(--text-dark);
 }
 
 /* Input fields */
 .auth-form input[type="email"],
 .auth-form input[type="password"] {
     width: 100%;
-    padding: 0.75rem 1rem;
-    margin-bottom: 1.25rem;
+    padding: 0.85rem 1.25rem;
+    margin-bottom: 1.5rem;
     border: 1.5px solid #ccc;
-    border-radius: 8px;
-    font-size: 1.1rem;
+    border-radius: 12px;
+    font-size: 1.2rem;
     box-sizing: border-box;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--white);
 }
 
 .auth-form input[type="email"]:focus,
 .auth-form input[type="password"]:focus {
-    border-color: var(--primary-blue);
+    border-color: var(--primary-blue-light);
+    box-shadow: 0 0 8px var(--primary-blue-light);
     outline: none;
 }
 
 /* Submit button */
 .auth-form button {
     width: 100%;
-    padding: 0.85rem;
-    font-size: 1.25rem;
-    border-radius: 8px;
+    padding: 1rem;
+    font-size: 1.3rem;
+    border-radius: 12px;
     font-weight: 700;
-    box-shadow: 0 4px 12px rgba(42, 111, 219, 0.5);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 20px rgba(42, 111, 219, 0.5);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
     background-color: var(--primary-blue);
     color: var(--white);
     border: none;
@@ -98,42 +107,25 @@ body {
 .auth-form button:hover,
 .auth-form button:focus {
     background-color: var(--primary-blue-light);
-    box-shadow: 0 6px 16px rgba(42, 111, 219, 0.7);
+    box-shadow: 0 8px 24px rgba(42, 111, 219, 0.7);
     outline: none;
+    transform: scale(1.05);
 }
 
-/* Message styling */
+/* Messages below form */
 .message {
-    margin-top: 1rem;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
+    margin-top: 1.25rem;
+    padding: 0.85rem 1.25rem;
+    border-radius: 12px;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 1.1rem;
     text-align: center;
 }
 
-.message.success {
-    color: #155724;
-    background-color: #d4edda;
-    border: 1px solid #c3e6cb;
-}
-
-.message.error {
-    color: #dc3545;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
-}
-
-.message.info {
-    color: #0c5460;
-    background-color: #d1ecf1;
-    border: 1px solid #bee5eb;
-}
-
-/* Register link below the form */
+/* Register link below form */
 .register-link {
-    margin-top: 1.5rem;
-    font-size: 1rem;
+    margin-top: 2rem;
+    font-size: 1.1rem;
     color: var(--text-muted);
     text-align: center;
 }
@@ -141,7 +133,7 @@ body {
 .register-link a {
     color: var(--primary-blue);
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
     transition: color 0.3s ease;
 }
 
@@ -151,17 +143,14 @@ body {
     text-decoration: underline;
 }
 
-/* Responsive tweaks for very small screens */
+/* Responsive tweaks */
 @media (max-width: 480px) {
     .auth-form {
         padding: 2rem 1.5rem;
-    }
-
-    .auth-form h2 {
-        font-size: 2.2rem;
+        border-radius: 12px;
     }
 
     .auth-form button {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
     }
 }

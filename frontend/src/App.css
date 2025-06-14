@@ -7,6 +7,10 @@
   --text-muted: #6c757d;
   --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+h1, h2, h3, h4, h5, h6 {
+  color: #084298; /* main heading blue from your styles */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
 body {
   margin: 0;
