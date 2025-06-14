@@ -88,7 +88,7 @@ export default function Dashboard() {
                 </div>
 
             {/*Transactions*/}
-            <h3>Transactions: </h3>
+            <h3>Transactions </h3>
             {Array.isArray(transactionDashboard) && transactionDashboard.length === 0 ? (
                 <p>No transactions to show.</p>
             ) : (
