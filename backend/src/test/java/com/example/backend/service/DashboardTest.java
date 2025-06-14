@@ -7,6 +7,7 @@ import com.example.backend.repo.TransactionRepo;
 import com.example.backend.repo.UserRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import java.util.Date;
 import java.util.List;
@@ -16,9 +17,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class DashboardTest {
+    @Mock
     private UserRepo mockUserRepo;
+    @Mock
     private TransactionRepo mockTransactionRepo;
+    @Mock
     private AccountRepo mockAccountRepo;
+    @Mock
     private DashboardService dashboardService;
 
     private User user;

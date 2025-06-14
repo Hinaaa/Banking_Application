@@ -5,6 +5,7 @@ import com.example.backend.repo.AccountRepo;
 import com.example.backend.repo.UserRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.Optional;
@@ -15,8 +16,11 @@ import static org.mockito.Mockito.*;
 
 class AccountServiceTest {
     //mocking repo
+    @Mock
     private UserRepo mockUserRepo;
+    @Mock
     private AccountRepo mockAccountRepo;
+    @Mock
     private AccountService accountService;
     //injecting user, account and accountdetails
     private User user;
