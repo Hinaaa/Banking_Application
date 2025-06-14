@@ -9,14 +9,19 @@ import com.example.backend.repo.AccountRepo;
 import com.example.backend.repo.UserRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserServiceTest {
+    @Mock
     private UserRepo mockUserRepo; //Mock dependencies
+    @Mock
     private AccountRepo mockAccountRepo;
+    @Mock
     private UserService userService; //service under test
+
     UserRegister userRegister; //sample input and output objects used in the tests to simulate real data:
     UserLogin userLogin;
     User user;
@@ -98,54 +103,50 @@ class UserServiceTest {
                 "123 abc Str", "Berlin", "13086", "Germany"); //simulate user invalid password, db entity simulation
         Mockito.when(mockUserRepo.findByEmail(userLogin.email())).thenReturn(invalidPasswordUser); //by this, userLogin.email() return this invalidPasswordUser object."
         // Response response = userService.loginUser(userLogin); //call response
-        InvalidCredentialsException thrown = assertThrows(InvalidCredentialsException.class, () -> {
-            userService.loginUser(userLogin);
-        }); //loginUser method is throwing an InvalidCredentialsException instead of response
+        InvalidCredentialsException thrown = assertThrows(InvalidCredentialsException.class, () -> userService.loginUser(userLogin)); //loginUser method is throwing an InvalidCredentialsException instead of response
         assertEquals("Wrong Email or Password", thrown.getMessage());
     }
     @Test //validate error message
     void loginUser_shouldThrowException_whenUserNotFound() {
            Mockito.when(mockUserRepo.findByEmail(userLogin.email())).thenReturn(null); //by this, userLogin.email() return null
         // Response response = userService.loginUser(userLogin); //call response
-        InvalidCredentialsException thrown = assertThrows(InvalidCredentialsException.class, () -> {
-            userService.loginUser(userLogin);
-        });
+        InvalidCredentialsException thrown = assertThrows(InvalidCredentialsException.class, () ->
+            userService.loginUser(userLogin)
+        );
         assertEquals("Wrong Email or Password", thrown.getMessage());
     }
     //when email null or empty
     @Test
     void loginUser_shouldThrowException_whenEmailIsNull() {
         UserLogin invalidLogin = new UserLogin(null, null, "test123");
-        InvalidCredentialsException thrown = assertThrows(InvalidCredentialsException.class, () -> {
-            userService.loginUser(invalidLogin);
-        });
+        InvalidCredentialsException thrown = assertThrows(InvalidCredentialsException.class, () ->
+            userService.loginUser(invalidLogin)
+        );
         assertEquals("Wrong Email or Password", thrown.getMessage()); // Or your validation message
     }
 
     @Test
     void loginUser_shouldThrowException_whenEmailIsEmpty() {
         UserLogin invalidLogin = new UserLogin(null, "", "test123");
-        InvalidCredentialsException thrown = assertThrows(InvalidCredentialsException.class, () -> {
-            userService.loginUser(invalidLogin);
-        });
+        InvalidCredentialsException thrown = assertThrows(InvalidCredentialsException.class, () ->
+            userService.loginUser(invalidLogin)
+        );
         assertEquals("Wrong Email or Password", thrown.getMessage());
     }
     //when password null or empty
     @Test
     void loginUser_shouldThrowException_whenPasswordIsNull() {
         UserLogin invalidLogin = new UserLogin(null, "jana.jorden@example.com", null);
-        InvalidCredentialsException thrown = assertThrows(InvalidCredentialsException.class, () -> {
-            userService.loginUser(invalidLogin);
-        });
+        InvalidCredentialsException thrown = assertThrows(InvalidCredentialsException.class, () -> userService.loginUser(invalidLogin));
         assertEquals("Wrong Email or Password", thrown.getMessage()); // Your validation message
     }
 
     @Test
     void loginUser_shouldThrowException_whenPasswordIsEmpty() {
         UserLogin invalidLogin = new UserLogin(null, "jana.jorden@example.com", "");
-        InvalidCredentialsException thrown = assertThrows(InvalidCredentialsException.class, () -> {
-            userService.loginUser(invalidLogin);
-        });
+        InvalidCredentialsException thrown = assertThrows(InvalidCredentialsException.class, () ->
+            userService.loginUser(invalidLogin)
+        );
         assertEquals("Wrong Email or Password", thrown.getMessage());
     }
 }
