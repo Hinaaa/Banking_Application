@@ -3,14 +3,18 @@ import type {AccountDetail} from "../types/AccountType.ts"
 import { getAccountDetails } from "../service/apiService.tsx"
 import { useSearchParams } from "react-router-dom";
 import "../css/ViewAccountDetail.css";
+import { useNavigate } from "react-router-dom";
 
-//export default function ViewAccountDetails(props:Readonly<accountDetailProps>){
 export default function ViewAccountDetails() {
     const [account, setAccount] = useState<AccountDetail | null>(null)
     const [error, setError] = useState("");
     const [searchParams] = useSearchParams();
     const idParam = searchParams.get("user_id"); //should be same as in backend cont4roller
     const numericId = idParam ? Number(idParam) : NaN;
+    const navigate = useNavigate();
+    const handleBack = () => {
+        navigate(-1); // this goes back one page in history
+    };
     useEffect(() => {// Runs only once when the component opens
         if (!numericId || isNaN(numericId)) {
             setError("Invalid or missing userId in URL");
@@ -57,6 +61,7 @@ export default function ViewAccountDetails() {
                     <p>PIN: {account.pin}</p>
                 </div>
             </div>
+            <div><button onClick={handleBack} className="back-button">← Back</button></div>
         </div>
     );
     }

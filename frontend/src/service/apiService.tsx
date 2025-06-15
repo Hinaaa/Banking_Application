@@ -176,6 +176,7 @@ export async function TransactionMoney(transactionData: Transactionrequest) { //
             transactionType: string;
             updatedBalance: number;
             transactionDate: string;
+            transactionDirection: "CREDIT"|"DEBIT"
             transactionData: Transactionrequest;
         };
     } catch (err) {
@@ -195,7 +196,33 @@ export async function TransactionMoney(transactionData: Transactionrequest) { //
     }
 }
 
+// export async function fetchCurrentBalance(userId: number): Promise<AccountBalanceResponse> {
+//     const resp = await axios.get("/api/account/addMoney", { params: { userId } });
+//     return resp.data;
+// }
+
+//fetchCurrentBalance
 export async function fetchCurrentBalance(userId: number): Promise<AccountBalanceResponse> {
-    const resp = await axios.get("/api/account/addMoney", { params: { userId } });
-    return resp.data;
+    try {
+        const response = await axios.get("/api/account/balance", {
+            params: { userId },
+        });
+        return response.data as AccountBalanceResponse;
+    } catch (err) {
+        if (axios.isAxiosError(err)) {
+            if (
+                err.response?.data &&
+                typeof err.response.data === "object" &&
+                "message" in err.response.data
+            ) {
+                const backendMessage = (err.response.data as { message: string }).message;
+                throw new Error(backendMessage);
+            }
+            if (typeof err.response?.data === "string") {
+                throw new Error(err.response.data);
+            }
+            throw new Error("Error: Could not connect to backend");
+        }
+        throw new Error("Unknown error occurred");
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.backend.model;
 
+import com.example.backend.enums.TransactionDirection;
 import com.example.backend.enums.TransactionStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -37,16 +38,19 @@ public class Transaction {
     private Date transactionDate;
     @Enumerated(EnumType.STRING)
     private TransactionStatus status;
+    @Enumerated(EnumType.STRING)
+    private TransactionDirection transactionDirection;
 
     public Transaction() { //Constructor
     }
 
-    public Transaction(Double amount, String description,String transactionType,String TransactionFromToAccountDetails,Date transactionDate,TransactionStatus status ) {
+    public Transaction(Double amount, String description,String transactionType,String TransactionFromToAccountDetails,Date transactionDate,TransactionStatus status, TransactionDirection transactionDirection) {
         this.amount = amount;
         this.description = description;
         this.transactionType = transactionType;
         this.transactionFromToAccountDetails = TransactionFromToAccountDetails;
         this.transactionDate = transactionDate;
         this.status = status;
+        this.transactionDirection = transactionDirection;
     }
 }

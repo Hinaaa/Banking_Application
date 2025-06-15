@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.enums.TransactionDirection;
 import com.example.backend.enums.TransactionStatus;
 import com.example.backend.model.*;
 import com.example.backend.repo.AccountRepo;
@@ -30,7 +31,8 @@ class TransactionServiceTest {
 
     private User user;
     private Account account;
-    private TransactionDto transactionDto;
+    private TransactionDto creditTransactionDto;
+    private TransactionDto debitTransactionDto;
 
     @BeforeEach
     void setUp() {
@@ -44,7 +46,7 @@ class TransactionServiceTest {
         account.setAccountBalance(1000.0);
         account.setUser(user);
 
-        transactionDto = new TransactionDto(
+        creditTransactionDto = new TransactionDto(
                 user.getId(),
                 account.getId(),
                 null,
@@ -54,7 +56,21 @@ class TransactionServiceTest {
                 "bankTransfer",
                 "Account Holder: Tester, IBAN: DE977898992789, BIC: BIC6872",
                 new Date(),
-                TransactionStatus.SUCCESS
+                TransactionStatus.SUCCESS,
+                TransactionDirection.CREDIT
+        );
+        debitTransactionDto = new TransactionDto(
+                user.getId(),
+                account.getId(),
+                null,
+                1000.00,
+                200.00,
+                "Test deposit",
+                "bankTransfer",
+                "Account Holder: Tester, IBAN: DE977898992789, BIC: BIC6872",
+                new Date(),
+                TransactionStatus.SUCCESS,
+                TransactionDirection.DEBIT
         );
     }
     //Transaction - add money
@@ -62,11 +78,12 @@ class TransactionServiceTest {
     void addMoneyTransaction_shouldReturnSuccessResponse_whenAccountExists() {
         when(mockAccountRepo.findById(account.getId())).thenReturn(Optional.of(account)); //mocked, return account when searched by Id
         when(mockUserRepo.getById(user.getId())).thenReturn(user);//mocked, return user when searched by Id
-        TransactionResponse response = transactionService.addTransaction(transactionDto); //call service
+        TransactionResponse response = transactionService.addTransaction(creditTransactionDto); //call service
         assertNotNull(response); //response not null
         assertEquals("Transaction Successful",response.message());
         assertEquals(TransactionStatus.SUCCESS.name(),response.transactionStatus());
         assertEquals(1200.00,response.updatedBalance());
+        assertEquals(TransactionDirection.CREDIT,response.transactionDirection());
 
         verify(mockAccountRepo).save(account); //verify mock
      //   verify(mockTransactionRepo).save(any(Transaction.class));
@@ -74,7 +91,7 @@ class TransactionServiceTest {
     @Test
     void addMoneyTransaction_shouldReturnFailedResponse_whenAccountNotFound() {
         when(mockAccountRepo.findById(account.getId())).thenReturn(Optional.empty()); //return account empty
-        TransactionResponse response = transactionService.addTransaction(transactionDto); //call service
+        TransactionResponse response = transactionService.addTransaction(creditTransactionDto); //call service
         assertNotNull(response);
         assertEquals("Account not found",response.message());
         assertEquals(TransactionStatus.FAILED.name(),response.transactionStatus());
@@ -86,18 +103,19 @@ class TransactionServiceTest {
     void transferTransaction_shouldReturnSuccessResponse_whenAccountExists_andSufficientBalance() {
         when(mockAccountRepo.findById(account.getId())).thenReturn(Optional.of(account)); //return account
         when(mockUserRepo.getById(user.getId())).thenReturn(user); //return user
-        TransactionResponse response = transactionService.transferTransaction(transactionDto); //call service
+        TransactionResponse response = transactionService.transferTransaction(debitTransactionDto); //call service
         assertNotNull(response); //response not null
         assertEquals("Transaction Successful",response.message()); //transaction successful
         assertEquals(TransactionStatus.SUCCESS.name(),response.transactionStatus()); //status success
         assertEquals(800.00,response.updatedBalance());
+        assertEquals(TransactionDirection.DEBIT,response.transactionDirection());
         verify(mockAccountRepo).save(account);
         verify(mockTransactionRepo).save(any(Transaction.class));
     }
     @Test
     void transferTransaction_shouldReturnFailedResponse_whenAccountNotFound_andSufficientBalance() {
         when(mockAccountRepo.findById(account.getId())).thenReturn(Optional.empty());//account empty
-        TransactionResponse response = transactionService.transferTransaction(transactionDto); //call service
+        TransactionResponse response = transactionService.transferTransaction(debitTransactionDto); //call service
         assertNotNull(response); //response not null
         assertEquals("Account not found",response.message());
         assertEquals(TransactionStatus.FAILED.name(),response.transactionStatus());
@@ -107,17 +125,19 @@ class TransactionServiceTest {
     @Test
     void transferTransaction_shouldReturnFailedResponse_whenInsufficientBalance() {
         account.setAccountBalance(100.00);
-        transactionDto = new TransactionDto(
+        debitTransactionDto = new TransactionDto(
                 user.getId(), account.getId(), null,  100.00, 200.00, "Test deposit with insufficient balance",
                 "bankTransfer", "Account Holder: Tester, IBAN: DE977898992789, BIC: BIC6872",
-                new Date(), TransactionStatus.FAILED
+                new Date(), TransactionStatus.FAILED,
+                TransactionDirection.DEBIT
         );
         when(mockAccountRepo.findById(account.getId())).thenReturn(Optional.of(account));
         when(mockUserRepo.getById(user.getId())).thenReturn(user);
 
-        TransactionResponse response = transactionService.transferTransaction(transactionDto);
+        TransactionResponse response = transactionService.transferTransaction(debitTransactionDto);
         assertNotNull(response);
         assertEquals("Transaction Failed: Account Balance low to transfer requested amount",response.message());
         assertEquals(TransactionStatus.FAILED.name(),response.transactionStatus());
+        assertEquals(TransactionDirection.DEBIT,response.transactionDirection());
     }
 }

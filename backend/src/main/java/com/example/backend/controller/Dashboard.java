@@ -16,7 +16,6 @@ public class Dashboard {
     public Dashboard(DashboardService dashboardService) {
         this.dashboardService = dashboardService;
     }
-
     @GetMapping("/dashboard")
     public ResponseEntity<DashboardResponse> dashboard(@RequestParam("userId") Long userId) { ////GET /api/account/dashboard?user_id=123
         return ResponseEntity.ok(dashboardService.viewTransactionDashboard(userId));

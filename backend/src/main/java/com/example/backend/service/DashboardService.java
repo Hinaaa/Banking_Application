@@ -38,7 +38,8 @@ public class DashboardService {
                         td.getTransactionType(),
                         td.getTransactionFromToAccountDetails(),
                         td.getTransactionDate(),
-                        td.getStatus()
+                        td.getStatus(),
+                        td.getTransactionDirection()
                 ))
                 .collect(Collectors.toList());
 

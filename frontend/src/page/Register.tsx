@@ -11,7 +11,9 @@ export default function Register() {
     const [error, setError] = useState("")
     const [responseMessage, setResponseMessage] = useState<{message: string; type: "success" | "error" | "info"; } | null>(null);
     const navigate = useNavigate();
-
+    const handleBack = () => {
+        navigate(-1); // this goes back one page in history
+    };
     const handleRegistration = async (e: React.FormEvent<HTMLFormElement>) => {// async so it can await the backend check
         e.preventDefault()
         if (!email) {
@@ -31,8 +33,6 @@ export default function Register() {
             return;
         }
         setError("");
-
-        //if user registered it should ot allow to create user with same email
         try {
             const data = await loginUser(email, password); // loginUser fails if user not registered
 
@@ -93,6 +93,7 @@ export default function Register() {
                     )}
                 </form>
             </div>
+            <div><button onClick={handleBack} className="back-button">← Back</button></div>
         </div>
     );
 }
