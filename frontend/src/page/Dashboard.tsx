@@ -87,7 +87,7 @@ export default function Dashboard() {
                 </div>
 
             {/*Transactions*/}
-            <h3>Transactions: </h3>
+            <h3>Transactions </h3>
             {Array.isArray(transactionDashboard) && transactionDashboard.length === 0 ? (
                 <p>No transactions to show.</p>
             ) : (
@@ -105,21 +105,36 @@ export default function Dashboard() {
                     </tr>
                     </thead>
                     <tbody>
-                    {Array.isArray(transactionDashboard) && transactionDashboard.map((transactionDetail) => (
-                        <tr key={transactionDetail.id}>
-                            <td>{transactionDetail.id}</td>
-                            <td>{transactionDetail.transactionDirection}</td>
-                            <td>{transactionDetail.amount}</td>
-                            <td>{transactionDetail.transactionType}</td>
-                            <td>{transactionDetail.description}</td>
-                            <td>{new Date(transactionDetail.transactionDate).toLocaleString()}</td>
-                            <td>{transactionDetail.status}</td>
-                            <td>{transactionDetail.transactionFromToAccountDetails}</td>
-                        </tr>
-                    ))}
+                    {Array.isArray(transactionDashboard) &&
+                        transactionDashboard.map((transactionDetail) => {
+                            // Use transactionDirection (e.g. "CREDIT"/"DEBIT") to set class
+                            const rawDir = transactionDetail.transactionDirection || "";
+                            const dir = rawDir.toString().trim().toLowerCase(); // "credit" or "debit"
+                            let rowClass = "";
+                            if (dir === "credit") {
+                                rowClass = "credit";
+                            } else if (dir === "debit") {
+                                rowClass = "debit";
+                            }
+                            // Show absolute amount; CSS ::before adds +/−
+                            const amount = Math.abs(Number(transactionDetail.amount)).toFixed(2);
+
+                            return (
+                                <tr key={transactionDetail.id} className={rowClass || undefined}>
+                                    <td>{transactionDetail.id}</td>
+                                    <td>{transactionDetail.transactionDirection}</td>
+                                    <td>{amount}</td>
+                                    <td>{transactionDetail.transactionType}</td>
+                                    <td>{transactionDetail.description}</td>
+                                    <td>{new Date(transactionDetail.transactionDate).toLocaleString()}</td>
+                                    <td>{transactionDetail.status}</td>
+                                    <td>{transactionDetail.transactionFromToAccountDetails}</td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             )}
         </>
-    )
+    );
 }
