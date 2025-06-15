@@ -20,7 +20,9 @@ export default function RegisterAccount() {
     //Enter pin code for authentication
     const [pin,setPin] = useState(""); //this pin delivered to customer
     const [responseMessage, setResponseMessage] = useState<{ message: string, type: "Success" | "error" | "info" } | null>(null);
-
+    const handleBack = () => {
+        navigate(-1); // this goes back one page in history
+    };
     //HandleAccountRegister
     const handleAccountRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -141,6 +143,7 @@ export default function RegisterAccount() {
                     )}
                 </form>
             </div>
+            <div><button onClick={handleBack} className="back-button">← Back</button></div>
         </div>
     );
 }

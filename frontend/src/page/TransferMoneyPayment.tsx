@@ -29,11 +29,11 @@ export default function TransferMoneyPayment() {
     const [loading, setLoading] = useState(false) //for loading while account fetching
     const [accountId, setAccountId] = useState(0)
     const [userId, setUserId] = useState(0)
-//        const [balance, setBalance] = useState<number>(0)
-
     const [balance, setBalance] = useState(0);
-
-// ① On mount (or when userId/accountId known), pull the balance:
+    const handleBack = () => {
+        navigate(-1); // this goes back one page in history
+    };
+// fetch balance:
     useEffect(() => {
         const uid = Number(localStorage.getItem("currentUserId"));
         if (!uid) return;
@@ -152,8 +152,9 @@ export default function TransferMoneyPayment() {
     if (loading) {
         return <p>Loading account details...</p>;
     }
-
     return (
+        <div>
+            <div><button onClick={handleBack} className="back-button">← Back</button></div>
         <div className="add-amount">
             <div className="balance-box">
                 <label htmlFor="current-balance ">Current Balance:</label>
@@ -269,6 +270,7 @@ export default function TransferMoneyPayment() {
                     {responseMessage.message}
                 </div>
             )}
+        </div>
         </div>
     )
 }

@@ -178,3 +178,12 @@ main {
   overflow-y: auto;            /* enable vertical scrolling */
   background-color: #f9f9f9;   /* optional: page background */
 }
+.balance-box {
+  text-align: right; /* align content inside to the right */
+  padding: 10px 20px; /* optional padding */
+  background-color: #e6f0fb; /* or keep your existing background */
+  border-radius: 8px;
+  font-weight: bold;
+  color: #123d6a; /* dark blue text */
+  margin-bottom: 20px;
+}
