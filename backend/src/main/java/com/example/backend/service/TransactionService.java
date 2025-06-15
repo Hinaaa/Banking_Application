@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.enums.TransactionDirection;
 import com.example.backend.enums.TransactionStatus;
 import com.example.backend.model.*;
 import com.example.backend.repo.AccountRepo;
@@ -29,7 +30,7 @@ public class TransactionService {
                 .orElse(null);
         if (account == null) {
             return new TransactionResponse("Account not found",
-                    TransactionStatus.FAILED.name(), null,null, null, null, null);
+                    TransactionStatus.FAILED.name(), null,null, null, null, null,null);
         } //enum as string
         User user = userRepo.getById(transactionDto.userId());//fetch user from repo
         Transaction transaction = new Transaction();
@@ -40,6 +41,7 @@ public class TransactionService {
         transaction.setTransactionType(transactionDto.transactionType());
         transaction.setTransactionDate(transactionDto.transactionDate());
         transaction.setStatus(TransactionStatus.SUCCESS);
+        transaction.setTransactionDirection(TransactionDirection.CREDIT);
         transaction.setTransactionFromToAccountDetails(transactionDto.transactionFromToAccountDetails());
 
         //Update Account Balance
@@ -51,7 +53,8 @@ public class TransactionService {
                 account.getAccountBalance(),
                 transactionDto.transactionDate(),
                 transactionDto,
-                transaction.getId());
+                transaction.getId(),
+                TransactionDirection.CREDIT);
     }
     //reusing balance from account
     public AccountBalanceResponse getUserBalance(Long userId) {
@@ -64,7 +67,7 @@ public class TransactionService {
                 .orElse(null);
         if (account == null) {
             return new TransactionResponse("Account not found",
-                    TransactionStatus.FAILED.name(), null, null, null, null, null);
+                    TransactionStatus.FAILED.name(), null, null, null, null, null,null);
         } //enum as string
         User user = userRepo.getById(transactionDto.userId());//fetch user from repo
         Transaction transaction = new Transaction();
@@ -76,25 +79,30 @@ public class TransactionService {
         transaction.setTransactionDate(transactionDto.transactionDate());
         transaction.setStatus(TransactionStatus.SUCCESS);
         transaction.setTransactionFromToAccountDetails(transactionDto.transactionFromToAccountDetails());
+        transaction.setTransactionDirection(TransactionDirection.DEBIT);
 
         //Update Account Balance
         if (account.getAccountBalance() >= transactionDto.amount()) {
             account.setAccountBalance(account.getAccountBalance() - transactionDto.amount());
             accountRepo.save(account);//balance updated in table Account
             transactionRepo.save(transaction); //saving transaction
-            return new TransactionResponse("Transaction Successful", TransactionStatus.SUCCESS.name(),
+            return new TransactionResponse("Transaction Successful",
+                    TransactionStatus.SUCCESS.name(),
                     transactionDto.transactionType(),
                     account.getAccountBalance(),
                     transactionDto.transactionDate(),
                     transactionDto,
-                    transaction.getId());
+                    transaction.getId(),
+                    TransactionDirection.DEBIT);
         }
         else
-            return new TransactionResponse("Transaction Failed: Account Balance low to transfer requested amount", TransactionStatus.FAILED.name(),
+            return new TransactionResponse("Transaction Failed: Account Balance low to transfer requested amount",
+                    TransactionStatus.FAILED.name(),
                     transactionDto.transactionType(),
                     account.getAccountBalance(),
                     transactionDto.transactionDate(),
                     transactionDto,
-                    transaction.getId());
+                    transaction.getId(),
+                    TransactionDirection.DEBIT);
     }
 }

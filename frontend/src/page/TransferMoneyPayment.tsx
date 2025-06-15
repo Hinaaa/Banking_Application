@@ -37,8 +37,11 @@ export default function TransferMoneyPayment() {
     useEffect(() => {
         const uid = Number(localStorage.getItem("currentUserId"));
         if (!uid) return;
+
         fetchCurrentBalance(uid)
-            .then(b => setBalance(b.accountBalance))
+            .then(b => {
+                setBalance(b.accountBalance); // Assuming b.accountBalance holds the balance
+            })
             .catch(() => setBalance(0));
     }, []);
     // fetch the user’s primary accountId
@@ -56,7 +59,7 @@ export default function TransferMoneyPayment() {
         getAccountDetails(userId) //get account detail as per user id(getAccountDetails imported from service), account must exist, that handled in dashboard
             .then((accountDetails) => {
                 setAccountId(accountDetails.accountId)
-                // setBalance(accountDetails.accountBalance);
+                // setBalance(accountDetails.balance)
                 // localStorage.setItem("currentBalance", accountDetails.accountBalance.toString());
             })
             .catch((err: unknown) => {
@@ -79,12 +82,18 @@ export default function TransferMoneyPayment() {
 
     //Handle adding account details
     const handleTransferMoney = async () => {
+
         if (!selectTransactionType) {
             setResponseMessage({message: "Please select the transaction type", type: "error"})
             return;
         }
         if (amount <= 0) {
             setResponseMessage({message: "Please enter a valid amount", type: "error"});
+            return;
+        }
+        if (amount > balance) {
+
+            setResponseMessage({ message: "Amount exceeds current balance", type: "error" });
             return;
         }
         if (selectTransactionType === "bankTransfer") {
@@ -116,7 +125,7 @@ export default function TransferMoneyPayment() {
             localStorage.setItem(key, newTransaction.updatedBalance.toString());
             //when all validation passed
             setResponseMessage({
-                message: "Transaction successful. Amount has been added to your Account",
+                message: "Transaction successful. Amount has been deducted from your Account",
                 type: "success"
             });
 
@@ -128,8 +137,8 @@ export default function TransferMoneyPayment() {
                 });
             } else {
                 setResponseMessage({
-                    message: "Transaction succeeded but no ID was returned",
-                    type: "info",
+                    message: "Transaction Unsuccessful",
+                    type: "error",
                 });
             }
         } catch (error: unknown) {
@@ -140,6 +149,10 @@ export default function TransferMoneyPayment() {
             }
         }
     }
+    if (loading) {
+        return <p>Loading account details...</p>;
+    }
+
     return (
         <div className="add-amount">
             <div className="balance-box">

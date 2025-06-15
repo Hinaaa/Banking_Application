@@ -1,14 +1,12 @@
 package com.example.backend.controller;
 
+import com.example.backend.model.AccountBalanceResponse;
 import com.example.backend.model.TransactionDto;
 import com.example.backend.model.TransactionResponse;
 import com.example.backend.repo.TransactionRepo;
 import com.example.backend.service.TransactionService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/account")
@@ -32,4 +30,10 @@ public class TransactionController {
         TransactionResponse response = transactionService.transferTransaction(transactionDto);
         return ResponseEntity.ok(response);
     }
+    //for balance view
+    @GetMapping("/balance")
+    public AccountBalanceResponse getBalance(@RequestParam long userId) {
+        return transactionService.getUserBalance(userId);
+    }
 }
+//current POST /addMoney endpoint only returns the balance after a transaction is done.

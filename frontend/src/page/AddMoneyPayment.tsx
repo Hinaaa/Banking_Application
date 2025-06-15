@@ -29,8 +29,6 @@
         const [loading, setLoading] = useState(false) //for loading while account fetching
         const [accountId, setAccountId] = useState(0)
         const [userId, setUserId] = useState(0)
-//        const [balance, setBalance] = useState<number>(0)
-
         const [balance, setBalance] = useState(0);
 
 // ① On mount (or when userId/accountId known), pull the balance:
@@ -57,7 +55,7 @@
                 .then((accountDetails) => {
                     setAccountId(accountDetails.accountId)
                    // setBalance(accountDetails.accountBalance);
-                   // localStorage.setItem("currentBalance", accountDetails.accountBalance.toString());
+                    // localStorage.setItem("currentBalance", accountDetails.accountBalance.toString());
                 })
                 .catch((err: unknown) => {
                     if (err instanceof Error) {
@@ -87,6 +85,7 @@
                 setResponseMessage({message: "Please enter a valid amount", type: "error"});
                 return;
             }
+
             if (selectTransactionType === "bankTransfer") {
                 if (!accountHolderName || !iban || !bic) {
                     setResponseMessage({message: "Please fill all required fields", type: "error"})

@@ -44,8 +44,6 @@ export default function Dashboard() {
         const numericId = Number(stored);
         navigate(`/viewaccountdetails?user_id=${numericId}`) //Include the user_id query param
     }
-    //a payment block here
-    //payment add money logic
     const handleAddMoneyPayment = () => {
         navigate("/addmoney")
     }
@@ -63,6 +61,7 @@ export default function Dashboard() {
     if(!dashboardData) { //if no data returned
         return null
     }
+
     const { accountDetailDashboardInfo, transactionDashboard } = dashboardData; //setting from type
     const accountInfo = accountDetailDashboardInfo as AccountInfo
 
@@ -96,12 +95,12 @@ export default function Dashboard() {
                     <thead>
                     <tr>
                         <th>Transaction Id</th>
+                        <th>Transaction</th>
                         <th>Transaction amount</th>
                         <th>Transaction Type</th>
                         <th>Transaction Description</th>
                         <th>Transaction Date</th>
                         <th>Transaction Status</th>
-                        <th>Balance After</th>
                         <th>Transaction to Account</th>
                     </tr>
                     </thead>
@@ -109,12 +108,12 @@ export default function Dashboard() {
                     {Array.isArray(transactionDashboard) && transactionDashboard.map((transactionDetail) => (
                         <tr key={transactionDetail.id}>
                             <td>{transactionDetail.id}</td>
+                            <td>{transactionDetail.transactionDirection}</td>
                             <td>{transactionDetail.amount}</td>
                             <td>{transactionDetail.transactionType}</td>
                             <td>{transactionDetail.description}</td>
                             <td>{new Date(transactionDetail.transactionDate).toLocaleString()}</td>
                             <td>{transactionDetail.status}</td>
-                            <td>{transactionDetail.accountBalance}</td>
                             <td>{transactionDetail.transactionFromToAccountDetails}</td>
                         </tr>
                     ))}
