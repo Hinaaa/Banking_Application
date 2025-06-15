@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.enums.TransactionDirection;
 import com.example.backend.enums.TransactionStatus;
 import com.example.backend.model.*;
 import com.example.backend.repo.AccountRepo;
@@ -54,7 +55,21 @@ class TransactionServiceTest {
                 "bankTransfer",
                 "Account Holder: Tester, IBAN: DE977898992789, BIC: BIC6872",
                 new Date(),
-                TransactionStatus.SUCCESS
+                TransactionStatus.SUCCESS,
+                TransactionDirection.CREDIT
+        );
+        transactionDto = new TransactionDto(
+                user.getId(),
+                account.getId(),
+                null,
+                1000.00,
+                200.00,
+                "Test deposit",
+                "bankTransfer",
+                "Account Holder: Tester, IBAN: DE977898992789, BIC: BIC6872",
+                new Date(),
+                TransactionStatus.SUCCESS,
+                TransactionDirection.DEBIT
         );
     }
     //Transaction - add money
@@ -67,6 +82,7 @@ class TransactionServiceTest {
         assertEquals("Transaction Successful",response.message());
         assertEquals(TransactionStatus.SUCCESS.name(),response.transactionStatus());
         assertEquals(1200.00,response.updatedBalance());
+        assertEquals(TransactionDirection.CREDIT,response.transactionDirection());
 
         verify(mockAccountRepo).save(account); //verify mock
      //   verify(mockTransactionRepo).save(any(Transaction.class));
@@ -91,6 +107,7 @@ class TransactionServiceTest {
         assertEquals("Transaction Successful",response.message()); //transaction successful
         assertEquals(TransactionStatus.SUCCESS.name(),response.transactionStatus()); //status success
         assertEquals(800.00,response.updatedBalance());
+        assertEquals(TransactionDirection.DEBIT,response.transactionDirection());
         verify(mockAccountRepo).save(account);
         verify(mockTransactionRepo).save(any(Transaction.class));
     }
@@ -110,7 +127,8 @@ class TransactionServiceTest {
         transactionDto = new TransactionDto(
                 user.getId(), account.getId(), null,  100.00, 200.00, "Test deposit with insufficient balance",
                 "bankTransfer", "Account Holder: Tester, IBAN: DE977898992789, BIC: BIC6872",
-                new Date(), TransactionStatus.FAILED
+                new Date(), TransactionStatus.FAILED,
+                TransactionDirection.DEBIT
         );
         when(mockAccountRepo.findById(account.getId())).thenReturn(Optional.of(account));
         when(mockUserRepo.getById(user.getId())).thenReturn(user);
@@ -119,5 +137,6 @@ class TransactionServiceTest {
         assertNotNull(response);
         assertEquals("Transaction Failed: Account Balance low to transfer requested amount",response.message());
         assertEquals(TransactionStatus.FAILED.name(),response.transactionStatus());
+        assertEquals(TransactionDirection.DEBIT,response.transactionDirection());
     }
 }
