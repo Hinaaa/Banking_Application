@@ -106,32 +106,34 @@ export default function Dashboard() {
                     </thead>
                     <tbody>
                     {Array.isArray(transactionDashboard) &&
-                        transactionDashboard.map((transactionDetail) => {
-                            // Use transactionDirection (e.g. "CREDIT"/"DEBIT") to set class
-                            const rawDir = transactionDetail.transactionDirection || "";
-                            const dir = rawDir.toString().trim().toLowerCase(); // "credit" or "debit"
-                            let rowClass = "";
-                            if (dir === "credit") {
-                                rowClass = "credit";
-                            } else if (dir === "debit") {
-                                rowClass = "debit";
-                            }
-                            // Show absolute amount; CSS ::before adds +/−
-                            const amount = Math.abs(Number(transactionDetail.amount)).toFixed(2);
+                        // Sort by transactionDate descending (newest first)
+                        transactionDashboard
+                            .slice() // create a shallow copy to avoid mutating state
+                            .sort((a, b) => new Date(b.transactionDate).getTime() - new Date(a.transactionDate).getTime())
+                            .map((transactionDetail) => {
+                                const rawDir = transactionDetail.transactionDirection || "";
+                                const dir = rawDir.toString().trim().toLowerCase();
+                                let rowClass = "";
+                                if (dir === "credit") {
+                                    rowClass = "credit";
+                                } else if (dir === "debit") {
+                                    rowClass = "debit";
+                                }
+                                const amount = Math.abs(Number(transactionDetail.amount)).toFixed(2);
 
-                            return (
-                                <tr key={transactionDetail.id} className={rowClass || undefined}>
-                                    <td>{transactionDetail.id}</td>
-                                    <td>{transactionDetail.transactionDirection}</td>
-                                    <td>{amount}</td>
-                                    <td>{transactionDetail.transactionType}</td>
-                                    <td>{transactionDetail.description}</td>
-                                    <td>{new Date(transactionDetail.transactionDate).toLocaleString()}</td>
-                                    <td>{transactionDetail.status}</td>
-                                    <td>{transactionDetail.transactionFromToAccountDetails}</td>
-                                </tr>
-                            );
-                        })}
+                                return (
+                                    <tr key={transactionDetail.id} className={rowClass || undefined}>
+                                        <td>{transactionDetail.id}</td>
+                                        <td>{transactionDetail.transactionDirection}</td>
+                                        <td>{amount}</td>
+                                        <td>{transactionDetail.transactionType}</td>
+                                        <td>{transactionDetail.description}</td>
+                                        <td>{new Date(transactionDetail.transactionDate).toLocaleString()}</td>
+                                        <td>{transactionDetail.status}</td>
+                                        <td>{transactionDetail.transactionFromToAccountDetails}</td>
+                                    </tr>
+                                );
+                            })}
                     </tbody>
                 </table>
             )}
