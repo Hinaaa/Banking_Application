@@ -14,13 +14,13 @@
     --card-bg: #f5faff;
     --border-light: #cce4ff;
 
-    /* 📐 Spacing */
+    /* Spacing */
     --space-xs: 0.5rem;
     --space-sm: 1rem;
     --space-md: 1.5rem;
     --space-lg: 2rem;
 
-    /* 🔠 Typography */
+    /* Typography */
     --font-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     --font-size-base: 1rem;
     --font-size-lg: 1.25rem;
@@ -28,7 +28,7 @@
     --font-bold: 700;
     --font-normal: 400;
 
-    /* 🌫️ Shadows */
+    /*  Shadows */
     --shadow-light: 0 6px 12px rgba(21, 101, 192, 0.1);
     --shadow-deep: 0 8px 25px rgba(0, 75, 170, 0.12);
     --shadow-hover: 0 20px 35px rgba(0, 75, 170, 0.25);
@@ -81,7 +81,7 @@ h3::after {
     margin: var(--space-xs) auto 0;
 }
 
-/* 🔹 Dashboard Layout          */
+/* Dashboard Layout*/
 .dashboard-top {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -99,7 +99,7 @@ h3::after {
     transform: translateY(-3px);
 }
 
-/* 📘 Account Cards             */
+/* Account Cards             */
 .account-detail {
     background: var(--card-bg);
     border: 1px solid var(--border-light);
