@@ -11,11 +11,11 @@ import ViewAccountDetails from "./page/ViewAccountDetails.tsx";
 import AddMoneyPayment from "./page/AddMoneyPayment.tsx";
 import TransferMoneyPayment from "./page/TransferMoneyPayment.tsx";
 import TransactionSuccessful from "./page/TransactionSuccessful.tsx";
+import ViewTransaction from "./page/ViewTransaction.tsx";
 
 function App() {
 
   return (
-
     <>
         <div className="app-container">
         <Routes>
@@ -29,6 +29,7 @@ function App() {
           <Route path="/addmoney" element={<AddMoneyPayment/>}/>
           <Route path="/transfermoney" element={<TransferMoneyPayment/>}/>
           <Route path="/transactionsuccessful" element={<TransactionSuccessful/>}/>
+          <Route path="/viewtransaction/:id" element={<ViewTransaction />} />
         </Routes>
         </div>
     </>
