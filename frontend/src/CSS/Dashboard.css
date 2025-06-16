@@ -125,7 +125,6 @@ h3::after {
     margin-bottom: var(--space-xs);
     letter-spacing: 0.8px;
 }
-
 /*  Buttons & Actions         */
 .handle-buttons {
     display: flex;
