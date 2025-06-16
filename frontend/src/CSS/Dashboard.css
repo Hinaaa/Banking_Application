@@ -1,12 +1,46 @@
-/* Reset and base styles */
+:root {
+    /* 🎨 Theme Colors */
+    --bg-gradient-start: #e6f2ff;
+    --bg-gradient-end: #f9fcff;
+    --text-primary: #0a2e70;
+    --text-secondary: #003366;
+    --blue: #1565c0;
+    --blue-dark: #0d47a1;
+    --green: #4caf50;
+    --green-dark: #2e7d32;
+    --red: #e53935;
+    --red-dark: #c62828;
+    --white-translucent: rgba(255, 255, 255, 0.85);
+    --card-bg: #f5faff;
+    --border-light: #cce4ff;
+
+    /* 📐 Spacing */
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2rem;
+
+    /* 🔠 Typography */
+    --font-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 2.5rem;
+    --font-bold: 700;
+    --font-normal: 400;
+
+    /* 🌫️ Shadows */
+    --shadow-light: 0 6px 12px rgba(21, 101, 192, 0.1);
+    --shadow-deep: 0 8px 25px rgba(0, 75, 170, 0.12);
+    --shadow-hover: 0 20px 35px rgba(0, 75, 170, 0.25);
+    --shadow-table: 0 6px 20px rgba(0, 75, 170, 0.1);
+}
+
 html, body, #root {
     margin: 0;
     padding: 0;
     height: 100%;
-    width: 100%;
-    background: linear-gradient(135deg, #e0f0ff, #f3f8fc);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #0d3c91;
+    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+    color: var(--text-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -15,204 +49,249 @@ html, body, #root {
     box-sizing: border-box;
 }
 
-/* Main heading */
+
+/* ✨ Headings & Typography     */
 h1 {
     text-align: center;
-    margin: 2rem 0 1rem;
-    font-size: 2.5rem;
-    color: #084298;
-    font-weight: 700;
+    font-size: clamp(1.5rem, 5vw, var(--font-size-xl));
+    color: var(--blue);
+    font-weight: var(--font-bold);
     letter-spacing: 1.2px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08);
+    margin: var(--space-lg) 0 var(--space-md);
 }
 
-/* Dashboard top container */
+h3 {
+    text-align: center;
+    font-size: clamp(1.3rem, 4vw, 1.75rem);
+    color: var(--blue-dark);
+    font-weight: var(--font-bold);
+    margin-top: var(--space-lg);
+    letter-spacing: 1px;
+    position: relative;
+}
+
+h3::after {
+    content: "";
+    display: block;
+    width: 3.5rem;
+    height: 3px;
+    background: var(--blue);
+    border-radius: 2px;
+    margin: var(--space-xs) auto 0;
+}
+
+/* 🔹 Dashboard Layout          */
 .dashboard-top {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 2rem;
-    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+    margin: 0 auto var(--space-lg);
+    padding: var(--space-md);
     max-width: 1150px;
-    margin: 0 auto 3rem auto;
-    padding: 1.5rem;
-    position: relative;
-    background: #ffffffcc;
+    background: var(--white-translucent);
     border-radius: 20px;
-    box-shadow: 0 15px 40px rgba(0, 80, 200, 0.1);
+    box-shadow: var(--shadow-deep);
     backdrop-filter: blur(12px);
+    transition: transform 0.3s ease;
+}
+.dashboard-top:hover {
+    transform: translateY(-3px);
 }
 
-/* Account detail card */
+/* 📘 Account Cards             */
 .account-detail {
-    flex: 1 1 320px;
-    background: #f0f7ff;
-    border: 1px solid #90caf9;
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    padding: var(--space-lg);
     border-radius: 18px;
-    padding: 2rem 2.5rem;
-    box-shadow: 0 8px 25px rgba(0, 75, 170, 0.12);
+    box-shadow: var(--shadow-deep);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
 }
-
 .account-detail:hover {
     transform: translateY(-5px);
-    box-shadow: 0 20px 35px rgba(0, 75, 170, 0.25);
+    box-shadow: var(--shadow-hover);
 }
-
-/* Paragraph inside account details */
 .account-detail p {
-    margin: 1rem 0;
+    margin: var(--space-sm) 0;
     font-size: 1.05rem;
-    font-weight: 600;
-    color: #084298;
+    font-weight: var(--font-bold);
+    color: var(--blue-dark);
 }
-
-/* Strong/bold text inside account detail */
 .account-detail strong {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
     display: block;
-    color: #003366;
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-xs);
     letter-spacing: 0.8px;
 }
 
-/* Top-right button container */
+/*  Buttons & Actions         */
 .handle-buttons {
-    position: absolute;
-    top: 1.5rem;
-    right: 2rem;
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    z-index: 10;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    justify-content: flex-end;
+    align-items: center;
 }
-
+@media (max-width: 700px) {
+    .handle-buttons {
+        justify-content: center;
+    }
+}
 .handle-buttons button {
     padding: 0.75rem 1.2rem;
-    background: linear-gradient(45deg, #1565c0, #0d47a1);
-    color: #fff;
+    background: linear-gradient(45deg, var(--blue), var(--blue-dark));
+    color: white;
     border: none;
     border-radius: 12px;
     cursor: pointer;
-    font-weight: 700;
-    font-size: 1rem;
-    box-shadow: 0 6px 12px rgba(21, 101, 192, 0.5);
-    transition: background 0.35s ease, transform 0.2s ease;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-bold);
+    box-shadow: var(--shadow-light);
+    transition: all 0.3s ease;
 }
-
 .handle-buttons button:hover {
-    background: linear-gradient(45deg, #0d47a1, #093d73);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(9, 61, 115, 0.6);
+    background: linear-gradient(45deg, var(--blue-dark), var(--blue));
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(9, 61, 115, 0.3);
+}
+.handle-buttons button:active {
+    transform: scale(0.98);
+    box-shadow: inset 0 4px 8px rgba(9, 61, 115, 0.2);
+}
+.handle-buttons button:focus-visible {
+    outline: 3px solid var(--blue-dark);
+    outline-offset: 2px;
 }
 
-/* Subheading style */
-h3 {
-    text-align: center;
-    font-size: 1.75rem;
-    margin-top: 3rem;
-    color: #084298;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-/* Transactions table styling */
+/* 📊 Tables & Transactions     */
 .transaction-table {
     width: 95%;
-    margin: 1.5rem auto 3rem auto;
-    border-collapse: collapse;
-    box-shadow: 0 6px 20px rgba(0, 75, 170, 0.1);
-    overflow-x: auto;
+    margin: var(--space-md) auto var(--space-lg);
+    border-spacing: 0;
+    border-collapse: separate;
     border-radius: 16px;
-    background: #fff;
+    box-shadow: var(--shadow-table);
+    background: white;
+    animation: fadeIn 0.5s ease-out;
+    overflow-x: auto;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* 🎯 Enhanced Table Interactivity */
+.transaction-table tbody tr {
+    animation: rowSlideUp 0.4s ease-in;
+    will-change: transform;
+}
+@keyframes rowSlideUp {
+    from { transform: translateY(15px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
-.transaction-table th,
-.transaction-table td {
-    border: 1px solid #bbdefb;
-    padding: 0.85rem 1rem;
-    text-align: center;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #003366;
-    user-select: none;
-}
-
-.transaction-table th {
-    background: linear-gradient(90deg, #1565c0, #0d47a1);
-    color: white;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-}
-
-.transaction-table tr:nth-child(even) {
-    background: #f1f8ff;
-}
-
-.transaction-table tr:hover {
-    background: #d6e6ff;
+/* 🪄 Row Hover Lift */
+.transaction-table tbody tr:hover {
+    transform: scale(1.01);
+    box-shadow: 0 8px 18px rgba(21, 101, 192, 0.15);
     cursor: pointer;
-    transition: background 0.3s ease;
+    z-index: 1;
 }
 
-/* Paragraphs after table and subheading */
-.transaction-table + p,
-h3 + p {
+/* 🏷️ Optional: Add icons to Description */
+.transaction-table td.description::before {
+    content: '💳 ';
+    font-size: 1rem;
+    margin-right: 4px;
+    vertical-align: middle;
+    opacity: 0.7;
+}
+
+/* 🌟 Add soft inner glow to cells */
+.transaction-table td {
+    box-shadow: inset 0 0 4px rgba(21, 101, 192, 0.05);
+}
+
+/* 📎 Make first column sticky for context (optional) */
+.transaction-table td:first-child {
+    position: sticky;
+    left: 0;
+    background: white;
+    z-index: 1;
+    box-shadow: inset -1px 0 0 var(--border-light);
+}
+
+.transaction-table thead th {
+    position: sticky;
+    top: 0;
+    background: linear-gradient(90deg, var(--blue), var(--blue-dark));
+    color: white;
+    font-weight: var(--font-bold);
+    padding: var(--space-xs) var(--space-sm);
+    letter-spacing: 0.05em;
+    border: 1px solid var(--border-light);
+    z-index: 2;
+}
+.transaction-table thead th:first-child {
+    border-top-left-radius: 16px;
+}
+.transaction-table thead th:last-child {
+    border-top-right-radius: 16px;
+}
+.transaction-table tbody td {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 0.95rem;
     text-align: center;
-    font-size: 1.1rem;
-    color: #555;
-    margin-top: 0.7rem;
-    font-style: italic;
+    font-weight: var(--font-bold);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+}
+.transaction-table tbody tr {
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+.transaction-table tbody tr:hover td {
+    background: #e3f0ff;
 }
 
-/* Loading and error messages */
-.loading, .error-message {
-    text-align: center;
-    font-size: 1.2rem;
-    margin-top: 2.5rem;
-    font-weight: 600;
+/* Credit/Debit Visuals */
+.transaction-table td:nth-child(3) {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    position: relative;
+    padding-right: 2rem;
+}
+.transaction-table tbody tr.credit td:nth-child(3)::before {
+    content: '+ ';
+    color: var(--green);
+    font-weight: var(--font-bold);
+    position: absolute;
+    left: 0.5rem;
+}
+.transaction-table tbody tr.debit td:nth-child(3)::before {
+    content: '− ';
+    color: var(--red);
+    font-weight: var(--font-bold);
+    position: absolute;
+    left: 0.5rem;
+}
+.transaction-table tbody tr.credit td {
+    background: #eaf7ed;
+    color: var(--green-dark);
+    border-left: 5px solid var(--green);
+}
+.transaction-table tbody tr.debit td {
+    background: #fdecea;
+    color: var(--red-dark);
+    border-left: 5px solid var(--red);
 }
 
-.error-message {
-    color: #d32f2f;
-    text-shadow: 0 0 3px #ff6f60;
-}
-
-/* Responsive adjustments */
-@media (max-width: 900px) {
-    .dashboard-top {
-        flex-direction: column;
-        align-items: center;
-        padding: 1rem;
-    }
-    .handle-buttons {
-        position: static;
-        flex-direction: row;
-        justify-content: center;
-        gap: 1rem;
-        margin-bottom: 1rem;
-    }
-    .account-detail {
-        width: 100%;
-        max-width: 400px;
-    }
-}
-
-@media (max-width: 480px) {
-    h1 {
-        font-size: 1.8rem;
-    }
-    h3 {
-        font-size: 1.3rem;
-    }
-    .handle-buttons button {
-        font-size: 0.85rem;
-        padding: 0.6rem 1rem;
-    }
-    .transaction-table th,
-    .transaction-table td {
-        font-size: 0.75rem;
-        padding: 0.5rem 0.75rem;
+/* Responsive & Optional Columns */
+@media (max-width: 600px) {
+    .transaction-table th:nth-child(5),
+    .transaction-table td:nth-child(5),
+    .transaction-table th:nth-child(7),
+    .transaction-table td:nth-child(7) {
+        display: none;
     }
 }

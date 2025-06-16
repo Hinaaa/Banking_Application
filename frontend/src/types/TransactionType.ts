@@ -18,6 +18,7 @@ export type TransactionDto = { //TransactionDto passed in response
     transactionFromToAccountDetails: string //entered by user from frontend
     transactionDate: Date //this is generated at backend already the time of entry
     status: "SUCCESS" | "FAILED" | "PENDING" | "Error";//this defined in enum at backend
+    transactionDirection: "CREDIT"|"DEBIT"
 }
 export type AccountBalanceResponse = {
     userId: number

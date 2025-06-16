@@ -1,5 +1,6 @@
 package com.example.backend.model;
 
+import com.example.backend.enums.TransactionDirection;
 import com.example.backend.enums.TransactionStatus;
 
 import java.util.Date;
@@ -14,6 +15,7 @@ public record TransactionDto(
         String transactionType, //added or transferred
         String transactionFromToAccountDetails, //transferred from acc/card: acc card detail or transferred to
         Date transactionDate,
-        TransactionStatus status
+        TransactionStatus status,
+        TransactionDirection transactionDirection
 ) {
 }

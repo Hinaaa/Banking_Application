@@ -44,8 +44,6 @@ export default function Dashboard() {
         const numericId = Number(stored);
         navigate(`/viewaccountdetails?user_id=${numericId}`) //Include the user_id query param
     }
-    //a payment block here
-    //payment add money logic
     const handleAddMoneyPayment = () => {
         navigate("/addmoney")
     }
@@ -63,6 +61,7 @@ export default function Dashboard() {
     if(!dashboardData) { //if no data returned
         return null
     }
+
     const { accountDetailDashboardInfo, transactionDashboard } = dashboardData; //setting from type
     const accountInfo = accountDetailDashboardInfo as AccountInfo
 
@@ -88,7 +87,7 @@ export default function Dashboard() {
                 </div>
 
             {/*Transactions*/}
-            <h3>Transactions: </h3>
+            <h3>Transactions </h3>
             {Array.isArray(transactionDashboard) && transactionDashboard.length === 0 ? (
                 <p>No transactions to show.</p>
             ) : (
@@ -96,31 +95,48 @@ export default function Dashboard() {
                     <thead>
                     <tr>
                         <th>Transaction Id</th>
+                        <th>Transaction</th>
                         <th>Transaction amount</th>
                         <th>Transaction Type</th>
                         <th>Transaction Description</th>
                         <th>Transaction Date</th>
                         <th>Transaction Status</th>
-                        <th>Balance After</th>
                         <th>Transaction to Account</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {Array.isArray(transactionDashboard) && transactionDashboard.map((transactionDetail) => (
-                        <tr key={transactionDetail.id}>
-                            <td>{transactionDetail.id}</td>
-                            <td>{transactionDetail.amount}</td>
-                            <td>{transactionDetail.transactionType}</td>
-                            <td>{transactionDetail.description}</td>
-                            <td>{new Date(transactionDetail.transactionDate).toLocaleString()}</td>
-                            <td>{transactionDetail.status}</td>
-                            <td>{transactionDetail.accountBalance}</td>
-                            <td>{transactionDetail.transactionFromToAccountDetails}</td>
-                        </tr>
-                    ))}
+                    {Array.isArray(transactionDashboard) &&
+                        // Sort by transactionDate descending (newest first)
+                        transactionDashboard
+                            .slice() // create a shallow copy to avoid mutating state
+                            .sort((a, b) => new Date(b.transactionDate).getTime() - new Date(a.transactionDate).getTime())
+                            .map((transactionDetail) => {
+                                const rawDir = transactionDetail.transactionDirection || "";
+                                const dir = rawDir.toString().trim().toLowerCase();
+                                let rowClass = "";
+                                if (dir === "credit") {
+                                    rowClass = "credit";
+                                } else if (dir === "debit") {
+                                    rowClass = "debit";
+                                }
+                                const amount = Math.abs(Number(transactionDetail.amount)).toFixed(2);
+
+                                return (
+                                    <tr key={transactionDetail.id} className={rowClass || undefined}>
+                                        <td>{transactionDetail.id}</td>
+                                        <td>{transactionDetail.transactionDirection}</td>
+                                        <td>{amount}</td>
+                                        <td>{transactionDetail.transactionType}</td>
+                                        <td>{transactionDetail.description}</td>
+                                        <td>{new Date(transactionDetail.transactionDate).toLocaleString()}</td>
+                                        <td>{transactionDetail.status}</td>
+                                        <td>{transactionDetail.transactionFromToAccountDetails}</td>
+                                    </tr>
+                                );
+                            })}
                     </tbody>
                 </table>
             )}
         </>
-    )
+    );
 }

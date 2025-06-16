@@ -24,6 +24,9 @@ export default function RegisterDetail() {
     const [yearOfBirth, setYearOfBirth] = useState("");
     const [error, setError] = useState("");
 
+    const handleBack = () => {
+        navigate(-1); // this goes back one page in history
+    };
     const handleRegister = async () => {
         if (!firstName || !lastName || !phone || !street || !houseNumber || !postalCode || !city || !country || !yearOfBirth) {
             setError("Please fill in all mandatory fields");
@@ -109,11 +112,10 @@ export default function RegisterDetail() {
                         onChange={(e) => setYearOfBirth(e.target.value)}
                     />
                 </div>
-
                 {error && <div className="error-message">{error}</div>}
-
                 <button onClick={handleRegister}>Register and Continue</button>
             </div>
+            <div><button onClick={handleBack} className="back-button">← Back</button></div>
         </div>
     );
 }
