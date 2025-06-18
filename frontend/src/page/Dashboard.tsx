@@ -2,7 +2,7 @@
     import {useEffect, useState} from "react";
     import {fetchDashboard} from "../service/apiService.tsx";
     import type {AccountInfo, DashboardResponse} from "../types/DashboardType.ts";
-    import "../CSS/Dashboard.css";
+    import "../css/Dashboard.css";
 
     export default function Dashboard() {
         const [loading, setLoading] = useState<boolean>(false);//for user

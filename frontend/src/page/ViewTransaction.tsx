@@ -1,5 +1,5 @@
 import {useLocation, useNavigate} from "react-router-dom";
-import "../CSS/ViewTransaction.css";
+import "../css/ViewTransaction.css";
 
 export default function ViewTransaction() {
     const { state } = useLocation();
