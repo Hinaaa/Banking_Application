@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @ControllerAdvice
 @RestController
 public class GlobalExceptionHandler {
@@ -32,5 +31,13 @@ public class GlobalExceptionHandler {
                 HttpStatus.UNAUTHORIZED.name()
         );
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+    }
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<ExceptionMessage> handle(UserAlreadyExistsException e) {
+        ExceptionMessage error = new ExceptionMessage(
+                "Error: " + e.getMessage(),
+                HttpStatus.CONFLICT.name()
+        );
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 }
