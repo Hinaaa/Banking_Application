@@ -13,14 +13,22 @@
     --box-bg: #eef4ff;
 }
 
-body {
+/* Global box-sizing to prevent overflow from padding/borders */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
     margin: 0;
+    padding: 0;
     min-height: 100vh;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    font-family: var(--font-family);
+    background: var(--background-light);
+    color: var(--text-dark);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--background-light);
-    color: var(--text-dark);
 }
 
 /* Container */
@@ -34,6 +42,8 @@ body {
     box-shadow: 0 8px 20px rgba(0, 82, 204, 0.15);
     animation: fadeIn 0.6s ease-in-out;
 }
+
+/* Rest of your styles unchanged except global fixes */
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(15px); }
@@ -66,7 +76,7 @@ body {
 .add-amount input,
 .add-amount button {
     width: 100%;
-    box-sizing: border-box;
+    /* box-sizing set globally */
 }
 
 /* Text inputs */
@@ -87,7 +97,7 @@ body {
 
 /* Labels + Form sections */
 .amount-form,
-.reference-comments /* fixed class name */ {
+.reference-comments {
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
@@ -95,8 +105,8 @@ body {
 
 /* Reference-specific spacing */
 .reference-comments {
-    margin-top: 2rem;    /* space above reference */
-    margin-bottom: 0;    /* no extra bottom */
+    margin-top: 2rem;
+    margin-bottom: 0;
 }
 
 /* Labels */
@@ -121,10 +131,13 @@ body {
     color: var(--primary-blue);
 }
 .radio-group input[type="radio"] {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
     accent-color: var(--primary-blue);
     margin: 0;
+    flex-shrink: 0;
 }
 
 /* IBAN & Card Blocks */
@@ -146,7 +159,7 @@ body {
 
 /* Add Money button */
 .add-amount > button {
-    margin-top: 2rem;    /* space above button */
+    margin-top: 2rem;
     padding: 0.75rem;
     background-color: var(--primary-blue);
     color: var(--white);
@@ -162,19 +175,6 @@ body {
     box-shadow: 0 4px 12px rgba(42, 111, 219, 0.5);
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-    .add-amount {
-        padding: 1.5rem;
-        margin: 1.5rem;
-    }
-    .add-amount h2 {
-        font-size: 1.6rem;
-    }
-    .radio-group {
-        gap: 0.75rem;
-    }
-}
 /* Transaction.css */
 
 .balance-box {
@@ -198,4 +198,75 @@ body {
     font-size: 1.1rem;
     font-weight: 700;
     color: #002f4b;
+}
+
+/* Responsive styles for mobile devices */
+@media (max-width: 600px) {
+    .add-amount {
+        padding: 1.5rem;
+        margin: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 82, 204, 0.1);
+    }
+    .add-amount h2 {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+    }
+    .radio-group {
+        gap: 0.75rem;
+    }
+    .radio-group input[type="radio"] {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 0 1rem;
+    }
+    .add-amount {
+        padding: 1rem;
+        margin: 1rem;
+        max-width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 82, 204, 0.1);
+    }
+    .add-amount h2 {
+        font-size: 1.4rem;
+    }
+    .add-money-transaction-by-iban,
+    .add-money-transaction-by-card {
+        padding: 1rem;
+        margin-top: 1rem;
+        border-radius: 8px;
+    }
+    .add-amount input[type="text"],
+    .add-amount input[type="number"],
+    .add-money-transaction-by-iban input,
+    .add-money-transaction-by-card input {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+    }
+    .add-amount > button {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+        border-radius: 6px;
+    }
+    .balance-box {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+        gap: 6px;
+    }
+    .balance-box label {
+        font-size: 0.85rem;
+    }
+    .balance-box output {
+        font-size: 1rem;
+    }
+    .radio-group input[type="radio"] {
+        width: 12px;
+        height: 12px;
+    }
 }

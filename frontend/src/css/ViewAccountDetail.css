@@ -47,9 +47,9 @@ html, body {
 
 /* ===== FORM HEADING ===== */
 .form-heading {
-    font-size: 1.8rem;        /* reduced from 2.4rem */
+    font-size: 1.8rem;
     font-weight: 700;
-    margin-bottom: 24px;      /* reduced from 32px */
+    margin-bottom: 24px;
     color: #1f2a56;
     text-align: center;
     user-select: text;
@@ -60,12 +60,12 @@ html, body {
 
 /* ===== SECTION TITLE ===== */
 .auth-form h3 {
-    font-size: 1.4rem;        /* reduced from 1.75rem */
+    font-size: 1.4rem;
     font-weight: 700;
     color: #344767;
     border-bottom: 3px solid #4c84f1;
-    padding-bottom: 6px;      /* reduced from 8px */
-    margin-bottom: 24px;      /* reduced from 32px */
+    padding-bottom: 6px;
+    margin-bottom: 24px;
     user-select: text;
     letter-spacing: 0.9px;
 }
@@ -74,27 +74,27 @@ html, body {
 .accountDetail, .carddetail {
     background: #f9fbff;
     border-radius: 18px;
-    padding: 26px 30px;       /* slightly reduced padding */
-    margin-bottom: 28px;      /* slightly reduced margin */
+    padding: 26px 30px;
+    margin-bottom: 28px;
     box-shadow:
             inset 5px 5px 15px rgba(255,255,255,0.9),
             inset -5px -5px 15px rgba(172,185,255,0.15);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* slightly narrower columns */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px 30px;
 }
 
 /* ===== SINGLE DETAIL ITEM ===== */
 .accountDetail p, .carddetail p {
     margin: 0;
-    font-size: 1.05rem;       /* reduced from 1.15rem */
+    font-size: 1.05rem;
     font-weight: 600;
     color: #3a4061;
     display: flex;
     align-items: center;
     gap: 14px;
     position: relative;
-    padding-left: 38px;       /* slightly less left padding */
+    padding-left: 38px;
     line-height: 1.3;
     transition: color 0.3s ease;
     cursor: default;
@@ -104,7 +104,7 @@ html, body {
 .accountDetail p strong, .carddetail p strong {
     font-weight: 700;
     color: #4c84f1;
-    min-width: 130px;         /* reduced from 140px */
+    min-width: 130px;
     user-select: text;
 }
 
@@ -113,16 +113,14 @@ html, body {
     content: "";
     position: absolute;
     left: 0;
-    width: 26px;              /* reduced from 28px */
-    height: 26px;             /* reduced from 28px */
+    width: 26px;
+    height: 26px;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
     filter: drop-shadow(0 0 1px rgba(76,132,241,0.5));
     transition: filter 0.3s ease;
 }
-
-/* Specific SVG icons (same as before) */
 
 /* ===== ON HOVER CHANGE TEXT & ICON COLOR ===== */
 .accountDetail p:hover,
@@ -138,9 +136,9 @@ html, body {
 .error-message {
     color: #e63946;
     font-weight: 700;
-    font-size: 0.95rem;       /* slightly smaller */
+    font-size: 0.95rem;
     text-align: center;
-    margin-bottom: 24px;      /* reduced */
+    margin-bottom: 24px;
     text-shadow: 0 0 4px #ff8a8a;
 }
 
@@ -148,18 +146,18 @@ html, body {
 .btn-primary {
     display: block;
     width: 100%;
-    padding: 14px 0;          /* reduced from 16px */
+    padding: 14px 0;
     background-color: #4c84f1;
     color: white;
     font-weight: 700;
-    font-size: 1.05rem;       /* reduced from 1.15rem */
+    font-size: 1.05rem;
     border: none;
     border-radius: 36px;
     cursor: pointer;
     box-shadow: 0 8px 24px rgba(76,132,241,0.6);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     user-select: none;
-    margin-top: 18px;         /* reduced */
+    margin-top: 18px;
     letter-spacing: 1.1px;
     text-transform: uppercase;
 }
@@ -177,7 +175,7 @@ html, body {
         padding: 30px 28px;
     }
     .form-heading {
-        font-size: 1.5rem;      /* smaller on medium */
+        font-size: 1.5rem;
         margin-bottom: 20px;
     }
     .auth-form h3 {
