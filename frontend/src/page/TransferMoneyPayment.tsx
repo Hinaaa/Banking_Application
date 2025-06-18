@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import {fetchCurrentBalance, getAccountDetails, TransactionMoney} from "../service/apiService.tsx";
-import "../CSS/Transaction.css";
+import "../css/Transaction.css";
 
 export default function TransferMoneyPayment() {
     const [amount, setAmount] = useState(0)
