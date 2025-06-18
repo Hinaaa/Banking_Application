@@ -7,9 +7,11 @@ RUN npm run build
 
 FROM maven:3.9.6-eclipse-temurin-21 AS backend-build
 WORKDIR /app/backend
-COPY backend/pom.xml backend/
-COPY backend/src backend/src
-# Copy Vite output (dist/) into Spring’s static resources
+# Place pom.xml at /app/backend
+COPY backend/pom.xml .
+# Place sources under /app/backend/src
+COPY backend/src ./src
+# Copy Vite output into Spring static
 COPY --from=frontend-build /app/frontend/dist src/main/resources/static
 RUN mvn clean package -DskipTests
 
