@@ -9,8 +9,8 @@ FROM maven:3.9.6-eclipse-temurin-21 AS backend-build
 WORKDIR /app/backend
 COPY backend/pom.xml backend/
 COPY backend/src backend/src
-# Copy React build from frontend-build
-COPY --from=frontend-build /app/frontend/build src/main/resources/static
+# Copy Vite output (dist/) into Spring’s static resources
+COPY --from=frontend-build /app/frontend/dist src/main/resources/static
 RUN mvn clean package -DskipTests
 
 FROM openjdk:21
