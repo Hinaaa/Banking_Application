@@ -1,10 +1,19 @@
-FROM maven:3.9.6-eclipse-temurin-21 AS build
-WORKDIR /app
+FROM node:18 AS frontend-build
+WORKDIR /app/frontend
+COPY frontend/package*.json ./
+RUN npm install
+COPY frontend/ .
+RUN npm run build
+
+FROM maven:3.9.6-eclipse-temurin-21 AS backend-build
+WORKDIR /app/backend
 COPY backend/pom.xml backend/
 COPY backend/src backend/src
-RUN mvn -f backend/pom.xml clean package -DskipTests
+# Copy React build from frontend-build
+COPY --from=frontend-build /app/frontend/build src/main/resources/static
+RUN mvn clean package -DskipTests
 
 FROM openjdk:21
 WORKDIR /app
-COPY --from=build /app/backend/target/*.jar bankingapplication.jar
+COPY --from=backend-build /app/backend/target/*.jar bankingapplication.jar
 CMD ["java", "-jar", "bankingapplication.jar"]
