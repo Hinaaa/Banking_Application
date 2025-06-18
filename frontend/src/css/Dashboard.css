@@ -294,3 +294,65 @@ h3::after {
         display: none;
     }
 }
+@media (max-width: 768px) {
+    .dashboard-top {
+        grid-template-columns: 1fr;
+        padding: var(--space-sm);
+    }
+
+    .account-detail {
+        padding: var(--space-md);
+        font-size: 0.95rem;
+    }
+
+    .handle-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-xs);
+    }
+
+    .handle-buttons button {
+        width: 100%;
+    }
+
+    .transaction-table {
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+    }
+
+    .transaction-table thead {
+        display: none;
+    }
+
+    .transaction-table tbody,
+    .transaction-table tr,
+    .transaction-table td {
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
+
+    .transaction-table td {
+        padding: var(--space-xs);
+        font-size: 0.9rem;
+        border: none;
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    .transaction-table tbody tr {
+        margin-bottom: var(--space-sm);
+        border-radius: 8px;
+        box-shadow: var(--shadow-light);
+        padding: var(--space-sm);
+        background: white;
+    }
+
+    .transaction-table td::before {
+        content: attr(data-label);
+        font-weight: var(--font-bold);
+        display: block;
+        margin-bottom: 4px;
+        color: var(--text-primary);
+    }
+}
