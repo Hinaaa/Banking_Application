@@ -183,7 +183,7 @@ class DashboardTest {
                 .andExpect(jsonPath("$.transactionDashboard[1].id").exists())
                 .andExpect(jsonPath("$.transactionDashboard[0].userId").value(userId.intValue()))
                 .andExpect(jsonPath("$.transactionDashboard[0].accountId").value(accountId.intValue()))
-                .andExpect(jsonPath("$.transactionDashboard[1].accountBalance").value(950.00))
+                .andExpect(jsonPath("$.transactionDashboard[1].accountBalance").value(950.00)) //balance will be calculated after final transaction
                 .andExpect(jsonPath("$.transactionDashboard[1].amount").value(50.00))
                 .andExpect(jsonPath("$.transactionDashboard[1].transactionType").value("DEBIT"))
                 .andExpect(jsonPath("$.transactionDashboard[0].transactionFromToAccountDetails").value("Employer Payroll"))
@@ -191,4 +191,4 @@ class DashboardTest {
                 .andExpect(jsonPath("$.transactionDashboard[1].status").value(TransactionStatus.SUCCESS.toString()))
                 .andExpect(jsonPath("$.transactionDashboard[1].transactionDate").exists());
     }
-    }
+}
