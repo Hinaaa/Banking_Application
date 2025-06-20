@@ -142,6 +142,7 @@ class DashboardTest {
                 .andExpect(jsonPath("$.transactionDirection").value(TransactionDirection.DEBIT.toString()))
                 .andExpect(jsonPath("$.transactionDate").exists());
     }
+
     @Test
     @DirtiesContext
     void viewDashboard_whenUserHasCreditedAndDebitedTransactions_shouldReturnAccountInfoAndTransactions() throws Exception {
