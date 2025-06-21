@@ -136,7 +136,14 @@ export default function RegisterDetail() {
                         type="text"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
+                        onFocus={() => setFocusedField("phone")}
+                        onBlur={() => setFocusedField(null)}
                     />
+                    {focusedField === "phone" && (
+                        <div className="focus-message">
+                            Phone Number must be 7–13 digits and may start with +
+                        </div>
+                    )}
 
                     <label htmlFor="street">Street *</label>
                     <input
