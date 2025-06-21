@@ -1,16 +1,17 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import heroImage from "../assets/images/HomeImage.png";
 import "../css/Home.css";
 
 export default function Home() {
+    const navigate = useNavigate();
 
-const navigate = useNavigate()
     const handleLogin = () => {
-        navigate("/login")
-    }
+        navigate("/login");
+    };
+
     const handleRegister = () => {
-        navigate("/register")
-    }
+        navigate("/register");
+    };
 
     return (
         <>
@@ -18,7 +19,7 @@ const navigate = useNavigate()
                 <h1 className="logo">MyBank</h1>
                 <nav className="nav-bar">
                     <ul className="nav-links">
-                        <li><a href="/about">About Us</a></li>
+                        <li><Link to="/about">About Us</Link></li>
                         <li><button onClick={handleLogin} className="btn small">Login</button></li>
                         <li><button onClick={handleRegister} className="btn small">Sign Up</button></li>
                     </ul>
@@ -35,6 +36,7 @@ const navigate = useNavigate()
                             Add and track your spending anytime.
                         </p>
                     </div>
+
                     <div className="hero-right">
                         <img src={heroImage} alt="Online banking services" />
                     </div>

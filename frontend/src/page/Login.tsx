@@ -11,11 +11,11 @@ export default function Login() {
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (!email) {
-            setResponseMessage({ message: "Please enter Email", type: "error" });
+            setResponseMessage({ message: "Please enter email", type: "error" });
             return;
         }
         if (!password) {
-            setResponseMessage({message: "Please enter Password", type: "error"});
+            setResponseMessage({message: "Please enter password", type: "error"});
             return;
         }
         setResponseMessage(null); // Clearing previous messages before sending the request

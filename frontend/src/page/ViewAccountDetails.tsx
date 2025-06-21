@@ -41,10 +41,12 @@ export default function ViewAccountDetails() {
        return <p>Loading..</p>
     }
     return (
+
         <div className="auth-wrapper">
+            <div>
+                <button onClick={handleBack} className="back-button">← Back</button>
             <div className="auth-form">
                 <h2 className="form-heading">View Account Details</h2>
-
                 <div className="accountDetail">
                     <h3>Account Details</h3>
                     <p>Account Holder: {account.accountHolderName}</p>
@@ -61,7 +63,7 @@ export default function ViewAccountDetails() {
                     <p>PIN: {account.pin}</p>
                 </div>
             </div>
-            <div><button onClick={handleBack} className="back-button">← Back</button></div>
+        </div>
         </div>
     );
     }
