@@ -355,4 +355,58 @@ h3::after {
         margin-bottom: 4px;
         color: var(--text-primary);
     }
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
 }
+
+/* ===== Logout button styling ===== */
+.dashboard-header {
+    position: relative; /* for absolute positioning of logout */
+    /* remove justify-content: space-between if present */
+    display: flex;
+    justify-content: center; /* center the h1 */
+    align-items: center;
+    margin-bottom: var(--space-md);
+}
+
+/* Place logout on left within header */
+.logout-button {
+    position: absolute;
+    left: var(--space-sm);
+    /* vertically center: */
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(45deg, var(--blue), var(--blue-dark));
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: var(--font-bold);
+    box-shadow: var(--shadow-light);
+    transition: all 0.3s ease;
+}
+.logout-button:hover {
+    background: linear-gradient(45deg, var(--blue-dark), var(--blue));
+    transform: translateY(-50%) translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(9, 61, 115, 0.3);
+}
+.logout-button:active {
+    transform: translateY(-50%) scale(0.97);
+    box-shadow: inset 0 4px 8px rgba(9, 61, 115, 0.2);
+}
+
+/* Mobile adjustment if needed */
+@media (max-width: 600px) {
+    .logout-button {
+        left: var(--space-xs);
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    /* The header flex centering still works on mobile */
+}
+

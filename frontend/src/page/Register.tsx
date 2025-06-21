@@ -10,6 +10,7 @@ export default function Register() {
     const [confirmNewPassword, setConfirmNewPassword] = useState("")
     const [error, setError] = useState("")
     const [responseMessage, setResponseMessage] = useState<{message: string; type: "success" | "error" | "info"; } | null>(null);
+    const [showPasswordRules, setShowPasswordRules] = useState(false);
     const navigate = useNavigate();
     const handleBack = () => {
         navigate(-1); // this goes back one page in history
@@ -17,19 +18,30 @@ export default function Register() {
     const handleRegistration = async (e: React.FormEvent<HTMLFormElement>) => {// async so it can await the backend check
         e.preventDefault()
         if (!email) {
-            setError("Pleas enter Email");
+            setError("Please enter email");
             return;
         }
         if (!password) {
-            setError("Please enter Password");
+            setError("Please enter password");
             return;
         }
         if (!confirmNewPassword) {
-            setError("Please enter Confirm Password");
+            setError("Please enter confirm password");
             return;
         }
         if (password !== confirmNewPassword) {
-            setError("Passwords do not match");
+            setError("Passwords does not matched");
+            return;
+        }
+        //field Validations:
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setError("Invalid email format");
+            return;
+        }
+        const strongPasswordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        if (!strongPasswordRegex.test(password)) {
+            setError("Password must be at least 8 characters long and contain letters and numbers");
             return;
         }
         setError("");
@@ -58,6 +70,8 @@ export default function Register() {
 
     return (
         <div className="auth-wrapper">
+            <div>
+                <div><button onClick={handleBack} className="back-button">← Back</button></div>
             <div className="auth-form">
                 <h2>Register User</h2>
                 <form onSubmit={handleRegistration}>
@@ -74,7 +88,14 @@ export default function Register() {
                         placeholder="new password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        onFocus={() => setShowPasswordRules(true)}
+                        onBlur={() => setShowPasswordRules(false)}
                     />
+                    {showPasswordRules && (
+                        <div className="password-rules">
+                            Password must be at least 8 characters long and contain letters and numbers.
+                        </div>
+                    )}
                     <label htmlFor="password">Confirm Password:</label>
                     <input
                         type="password"
@@ -82,18 +103,19 @@ export default function Register() {
                         value={confirmNewPassword}
                         onChange={(e) => setConfirmNewPassword(e.target.value)}
                     />
-                    <button type="submit">Continue</button>
 
                     {error && <div className="error-message">{error}</div>}
+                    <button type="submit">Continue</button>
 
                     {responseMessage && (
                         <div className={`message ${responseMessage.type.toLowerCase()}`}>
                             {responseMessage.message}
                         </div>
                     )}
+
                 </form>
             </div>
-            <div><button onClick={handleBack} className="back-button">← Back</button></div>
+            </div>
         </div>
     );
 }

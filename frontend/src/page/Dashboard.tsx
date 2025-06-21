@@ -12,7 +12,12 @@
         //user
         const stored = localStorage.getItem("currentUserId");
         const userId = stored ? Number(stored) : null;
-       //fetchDashboard data
+        const handleLogout = () => {
+            localStorage.removeItem("currentUserId"); // Clear session or user info
+            navigate("/"); // Navigate to homepage or login
+        };
+
+        //FetchDashboard data
         useEffect(() => {
             if (!userId) {
                 alert("User Id missing");
@@ -67,10 +72,12 @@
 
         return (
             <>
+                <div>
+                    <div className="dashboard-header">
+                        <h1>Welcome to your Dashboard</h1>
+                        <h2><button onClick={handleLogout} className="logout-button">Logout</button></h2>
+                    </div>
                 {/*Account Detail*/}
-                    <h1>Welcome to your Dashboard</h1>
-
-                    {/* Top row: account details left, buttons right */}
                     <div className="dashboard-top">
                         <div className="account-detail">
                             <p><strong>Name: {accountInfo.accountHolderName}</strong></p>
@@ -85,7 +92,7 @@
                             <button onClick={handleTransferMoneyPayment}>Transfer Money</button>
                         </div>
                     </div>
-
+                </div>
                 {/*Transactions*/}
                 <h3>Transactions </h3>
                 {Array.isArray(transactionDashboard) && transactionDashboard.length === 0 ? (
@@ -131,14 +138,14 @@
                                                 })
                                             }
                                         >
-                                            <td>{transactionDetail.id}</td>
-                                            <td>{transactionDetail.transactionDirection}</td>
-                                            <td>{amount}</td>
-                                            <td>{transactionDetail.transactionType}</td>
-                                            <td>{transactionDetail.description}</td>
-                                            <td>{new Date(transactionDetail.transactionDate).toLocaleString()}</td>
-                                            <td>{transactionDetail.status}</td>
-                                            <td>{transactionDetail.transactionFromToAccountDetails}</td>
+                                            <td data-label="Transaction Id">{transactionDetail.id}</td>
+                                            <td data-label="Transaction">{transactionDetail.transactionDirection}</td>
+                                            <td data-label="Transaction amount">{amount}</td>
+                                            <td data-label="Transaction Type">{transactionDetail.transactionType}</td>
+                                            <td data-label="Transaction Description">{transactionDetail.description}</td>
+                                            <td data-label="Transaction Date">{new Date(transactionDetail.transactionDate).toLocaleString()}</td>
+                                            <td data-label="Transaction Status">{transactionDetail.status}</td>
+                                            <td data-label="Transaction to Account">{transactionDetail.transactionFromToAccountDetails}</td>
                                         </tr>
                                     );
                                 })}
