@@ -20,6 +20,9 @@ export default function RegisterAccount() {
     // PIN
     const [pin, setPin] = useState("");
 
+    //loading
+    const [loading, setLoading] = useState(false);
+
     // Response and focus
     const [responseMessage, setResponseMessage] = useState<{ message: string; type: "Success" | "error" | "info" } | null>(null);
     const [focusedField, setFocusedField] = useState<string | null>(null);
@@ -42,10 +45,15 @@ export default function RegisterAccount() {
 
     const handleAccountRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+       //loading
+        if (loading) return; // Prevent multiple submits while loading
+        setLoading(true);
+        setResponseMessage(null);
 
         // Basic required check
         if (!accountHolderName || !iban || !cardNumber || !cardHolder || !expiryDate || !cvv || !pin) {
             setResponseMessage({ message: "Please fill all required fields", type: "error" });
+            setLoading(false);
             return;
         }
         setResponseMessage(null);
@@ -54,6 +62,7 @@ export default function RegisterAccount() {
         const userId = Number(localStorage.getItem("currentUserId"));
         if (!userId) {
             setResponseMessage({ message: "User not logged in", type: "error" });
+            setLoading(false);
             return;
         }
 
@@ -74,18 +83,21 @@ export default function RegisterAccount() {
                 message: "Invalid card number format. It should contain exactly 16 digits (spaces allowed).",
                 type: "error",
             });
+            setLoading(false);
             return;
         }
 
         // Validate expiry date
         if (!/^\d{2}\/\d{2}$/.test(expiryDate)) {
             setResponseMessage({ message: "Expiry date must be in MM/YY format", type: "error" });
+            setLoading(false);
             return;
         }
 
         // Validate CVV
         if (!/^\d{3}$/.test(cvv)) {
             setResponseMessage({ message: "Invalid CVV. It must be exactly 3 digits.", type: "error" });
+            setLoading(false);
             return;
         }
 
@@ -104,12 +116,21 @@ export default function RegisterAccount() {
             });
             setResponseMessage({ message: data.message, type: "Success" });
             navigate("/dashboard");
-        } catch (error: unknown) {
+        }catch (error: unknown) {
             if (error instanceof Error) {
-                setResponseMessage({ message: error.message, type: "error" });
+                if (
+                    error.message.includes("Network Error") ||
+                    error.message.includes("Failed to fetch")
+                ) {
+                    setResponseMessage({ message: "Cannot connect to backend. Please try again later.", type: "error" });
+                } else {
+                    setResponseMessage({ message: error.message, type: "error" });
+                }
             } else {
                 setResponseMessage({ message: "An unexpected error occurred", type: "error" });
             }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -129,6 +150,7 @@ export default function RegisterAccount() {
                         ← Back
                     </button>
                 </div>
+                {loading && <div className="loading-message">Please wait...</div>}
                 <div className="auth-form">
                     <h1>Welcome to account registration</h1>
                     <form onSubmit={handleAccountRegister}>
@@ -238,7 +260,9 @@ export default function RegisterAccount() {
                             {renderHint("pin")}
                         </div>
 
-                        <button type="submit">Register Account and Proceed</button>
+                        <button type="submit" disabled={loading}>
+                            {loading ? "Registering..." : "Register Account and Proceed"}
+                        </button>
 
                         {responseMessage && (
                             <div className={`message ${responseMessage.type.toLowerCase()}`}>
