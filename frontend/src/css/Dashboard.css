@@ -1,412 +1,214 @@
+/* src/css/Home.css */
+
+/* CSS Variables (ensure these are defined globally or in :root) */
+
 :root {
-    /* 🎨 Theme Colors */
-    --bg-gradient-start: #e6f2ff;
-    --bg-gradient-end: #f9fcff;
-    --text-primary: #0a2e70;
-    --text-secondary: #003366;
-    --blue: #1565c0;
-    --blue-dark: #0d47a1;
-    --green: #4caf50;
-    --green-dark: #2e7d32;
-    --red: #e53935;
-    --red-dark: #c62828;
-    --white-translucent: rgba(255, 255, 255, 0.85);
-    --card-bg: #f5faff;
-    --border-light: #cce4ff;
-
-    /* Spacing */
-    --space-xs: 0.5rem;
-    --space-sm: 1rem;
-    --space-md: 1.5rem;
-    --space-lg: 2rem;
-
-    /* Typography */
-    --font-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    --font-size-base: 1rem;
-    --font-size-lg: 1.25rem;
-    --font-size-xl: 2.5rem;
-    --font-bold: 700;
-    --font-normal: 400;
-
-    /*  Shadows */
-    --shadow-light: 0 6px 12px rgba(21, 101, 192, 0.1);
-    --shadow-deep: 0 8px 25px rgba(0, 75, 170, 0.12);
-    --shadow-hover: 0 20px 35px rgba(0, 75, 170, 0.25);
-    --shadow-table: 0 6px 20px rgba(0, 75, 170, 0.1);
+  --primary-blue: #0052cc;
+  --primary-blue-light: #0066ff;
+  --secondary-blue: #004bb5;
+  --white: #ffffff;
+  --text-muted: #555555;
+  --gray-dark: #333333;
 }
 
-html, body, #root {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
-    color: var(--text-primary);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
 
-* {
+/* Header styles */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    width: 100%;
+    background-color: var(--white);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
 }
 
-
-/* ✨ Headings & Typography     */
-h1 {
-    text-align: center;
-    font-size: clamp(1.5rem, 5vw, var(--font-size-xl));
-    color: var(--blue);
-    font-weight: var(--font-bold);
-    letter-spacing: 1.2px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08);
-    margin: var(--space-lg) 0 var(--space-md);
+/* Logo */
+.logo {
+    font-size: 1.8rem;
+    color: var(--primary-blue);
+    font-weight: 700;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-h3 {
-    text-align: center;
-    font-size: clamp(1.3rem, 4vw, 1.75rem);
-    color: var(--blue-dark);
-    font-weight: var(--font-bold);
-    margin-top: var(--space-lg);
-    letter-spacing: 1px;
-    position: relative;
-}
-
-h3::after {
-    content: "";
-    display: block;
-    width: 3.5rem;
-    height: 3px;
-    background: var(--blue);
-    border-radius: 2px;
-    margin: var(--space-xs) auto 0;
-}
-
-/* Dashboard Layout*/
-.dashboard-top {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--space-lg);
-    margin: 0 auto var(--space-lg);
-    padding: var(--space-md);
-    max-width: 1150px;
-    background: var(--white-translucent);
-    border-radius: 20px;
-    box-shadow: var(--shadow-deep);
-    backdrop-filter: blur(12px);
-    transition: transform 0.3s ease;
-}
-.dashboard-top:hover {
-    transform: translateY(-3px);
-}
-
-/* Account Cards             */
-.account-detail {
-    background: var(--card-bg);
-    border: 1px solid var(--border-light);
-    padding: var(--space-lg);
-    border-radius: 18px;
-    box-shadow: var(--shadow-deep);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.account-detail:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-hover);
-}
-.account-detail p {
-    margin: var(--space-sm) 0;
-    font-size: 1.05rem;
-    font-weight: var(--font-bold);
-    color: var(--blue-dark);
-}
-.account-detail strong {
-    font-size: var(--font-size-lg);
-    color: var(--text-secondary);
-    display: block;
-    margin-bottom: var(--space-xs);
-    letter-spacing: 0.8px;
-}
-/*  Buttons & Actions         */
-.handle-buttons {
+/* Nav bar */
+.nav-bar {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-sm);
-    justify-content: flex-end;
     align-items: center;
 }
-@media (max-width: 700px) {
-    .handle-buttons {
-        justify-content: center;
-    }
-}
-.handle-buttons button {
-    padding: 0.75rem 1.2rem;
-    background: linear-gradient(45deg, var(--blue), var(--blue-dark));
-    color: white;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: var(--font-size-base);
-    font-weight: var(--font-bold);
-    box-shadow: var(--shadow-light);
-    transition: all 0.3s ease;
-}
-.handle-buttons button:hover {
-    background: linear-gradient(45deg, var(--blue-dark), var(--blue));
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 10px 20px rgba(9, 61, 115, 0.3);
-}
-.handle-buttons button:active {
-    transform: scale(0.98);
-    box-shadow: inset 0 4px 8px rgba(9, 61, 115, 0.2);
-}
-.handle-buttons button:focus-visible {
-    outline: 3px solid var(--blue-dark);
-    outline-offset: 2px;
+
+/* Nav links */
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-/* 📊 Tables & Transactions     */
-.transaction-table {
-    width: 95%;
-    margin: var(--space-md) auto var(--space-lg);
-    border-spacing: 0;
-    border-collapse: separate;
-    border-radius: 16px;
-    box-shadow: var(--shadow-table);
-    background: white;
-    animation: fadeIn 0.5s ease-out;
-    overflow-x: auto;
-}
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-/* 🎯 Enhanced Table Interactivity */
-.transaction-table tbody tr {
-    animation: rowSlideUp 0.4s ease-in;
-    will-change: transform;
-}
-@keyframes rowSlideUp {
-    from { transform: translateY(15px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+/* Each link item */
+.nav-links li {
+    display: flex;
+    align-items: center;
 }
 
-/* 🪄 Row Hover Lift */
-.transaction-table tbody tr:hover {
-    transform: scale(1.01);
-    box-shadow: 0 8px 18px rgba(21, 101, 192, 0.15);
-    cursor: pointer;
-    z-index: 1;
-}
-
-/* 🏷️ Optional: Add icons to Description */
-.transaction-table td.description::before {
-    content: '💳 ';
+/* Buttons */
+.btn.small {
+    padding: 0.5rem 1rem;
     font-size: 1rem;
-    margin-right: 4px;
-    vertical-align: middle;
-    opacity: 0.7;
-}
-
-/* 🌟 Add soft inner glow to cells */
-.transaction-table td {
-    box-shadow: inset 0 0 4px rgba(21, 101, 192, 0.05);
-}
-
-/* 📎 Make first column sticky for context (optional) */
-.transaction-table td:first-child {
-    position: sticky;
-    left: 0;
-    background: white;
-    z-index: 1;
-    box-shadow: inset -1px 0 0 var(--border-light);
-}
-
-.transaction-table thead th {
-    position: sticky;
-    top: 0;
-    background: linear-gradient(90deg, var(--blue), var(--blue-dark));
-    color: white;
-    font-weight: var(--font-bold);
-    padding: var(--space-xs) var(--space-sm);
-    letter-spacing: 0.05em;
-    border: 1px solid var(--border-light);
-    z-index: 2;
-}
-.transaction-table thead th:first-child {
-    border-top-left-radius: 16px;
-}
-.transaction-table thead th:last-child {
-    border-top-right-radius: 16px;
-}
-.transaction-table tbody td {
-    padding: var(--space-xs) var(--space-sm);
-    font-size: 0.95rem;
-    text-align: center;
-    font-weight: var(--font-bold);
-    color: var(--text-secondary);
-    border: 1px solid var(--border-light);
-}
-.transaction-table tbody tr {
-    transition: background 0.3s ease, transform 0.2s ease;
-}
-.transaction-table tbody tr:hover td {
-    background: #e3f0ff;
-}
-
-/* Credit/Debit Visuals */
-.transaction-table td:nth-child(3) {
-    text-align: right;
-    font-variant-numeric: tabular-nums;
-    position: relative;
-    padding-right: 2rem;
-}
-.transaction-table tbody tr.credit td:nth-child(3)::before {
-    content: '+ ';
-    color: var(--green);
-    font-weight: var(--font-bold);
-    position: absolute;
-    left: 0.5rem;
-}
-.transaction-table tbody tr.debit td:nth-child(3)::before {
-    content: '− ';
-    color: var(--red);
-    font-weight: var(--font-bold);
-    position: absolute;
-    left: 0.5rem;
-}
-.transaction-table tbody tr.credit td {
-    background: #eaf7ed;
-    color: var(--green-dark);
-    border-left: 5px solid var(--green);
-}
-.transaction-table tbody tr.debit td {
-    background: #fdecea;
-    color: var(--red-dark);
-    border-left: 5px solid var(--red);
-}
-
-/* Responsive & Optional Columns */
-@media (max-width: 600px) {
-    .transaction-table th:nth-child(5),
-    .transaction-table td:nth-child(5),
-    .transaction-table th:nth-child(7),
-    .transaction-table td:nth-child(7) {
-        display: none;
-    }
-}
-@media (max-width: 768px) {
-    .dashboard-top {
-        grid-template-columns: 1fr;
-        padding: var(--space-sm);
-    }
-
-    .account-detail {
-        padding: var(--space-md);
-        font-size: 0.95rem;
-    }
-
-    .handle-buttons {
-        flex-direction: column;
-        align-items: stretch;
-        gap: var(--space-xs);
-    }
-
-    .handle-buttons button {
-        width: 100%;
-    }
-
-    .transaction-table {
-        width: 100%;
-        overflow-x: auto;
-        display: block;
-    }
-
-    .transaction-table thead {
-        display: none;
-    }
-
-    .transaction-table tbody,
-    .transaction-table tr,
-    .transaction-table td {
-        display: block;
-        width: 100%;
-        text-align: left;
-    }
-
-    .transaction-table td {
-        padding: var(--space-xs);
-        font-size: 0.9rem;
-        border: none;
-        border-bottom: 1px solid var(--border-light);
-    }
-
-    .transaction-table tbody tr {
-        margin-bottom: var(--space-sm);
-        border-radius: 8px;
-        box-shadow: var(--shadow-light);
-        padding: var(--space-sm);
-        background: white;
-    }
-
-    .transaction-table td::before {
-        content: attr(data-label);
-        font-weight: var(--font-bold);
-        display: block;
-        margin-bottom: 4px;
-        color: var(--text-primary);
-    }
-    .dashboard-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1rem;
-    }
-}
-
-/* ===== Logout button styling ===== */
-.dashboard-header {
-    position: relative; /* for absolute positioning of logout */
-    /* remove justify-content: space-between if present */
-    display: flex;
-    justify-content: center; /* center the h1 */
-    align-items: center;
-    margin-bottom: var(--space-md);
-}
-
-/* Place logout on left within header */
-.logout-button {
-    position: absolute;
-    left: var(--space-sm);
-    /* vertically center: */
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 0.6rem 1.2rem;
-    background: linear-gradient(45deg, var(--blue), var(--blue-dark));
-    color: white;
+    border-radius: 6px;
     border: none;
-    border-radius: 10px;
     cursor: pointer;
-    font-weight: var(--font-bold);
-    box-shadow: var(--shadow-light);
-    transition: all 0.3s ease;
+    background-color: var(--primary-blue);
+    color: var(--white);
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
-.logout-button:hover {
-    background: linear-gradient(45deg, var(--blue-dark), var(--blue));
-    transform: translateY(-50%) translateY(-2px) scale(1.02);
-    box-shadow: 0 10px 20px rgba(9, 61, 115, 0.3);
+.btn.large {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: var(--primary-blue);
+    color: var(--white);
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
-.logout-button:active {
-    transform: translateY(-50%) scale(0.97);
-    box-shadow: inset 0 4px 8px rgba(9, 61, 115, 0.2);
+.btn.small:hover,
+.btn.small:focus,
+.btn.large:hover,
+.btn.large:focus {
+    background-color: var(--primary-blue-light);
+    transform: scale(1.03);
+    outline: none;
 }
 
-/* Mobile adjustment if needed */
-@media (max-width: 600px) {
-    .logout-button {
-        left: var(--space-xs);
-        padding: 0.5rem 1rem;
-        font-size: 0.9rem;
+/* Mobile menu toggle button */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--primary-blue);
+}
+
+/* Hero section */
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 2rem 2rem;
+    box-sizing: border-box;
+    animation: fadeInUp 1s ease forwards;
+}
+
+.hero-left {
+    flex: 1;
+    min-width: 280px;
+    max-width: 550px;
+    animation: fadeInUp 1s ease forwards;
+}
+.hero-left h2 {
+    color: var(--primary-blue);
+    font-size: 2.6rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+.hero-left h4 {
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+.hero-left p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+/* Feature list under hero */
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+}
+.features-list li {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--gray-dark);
+}
+/* Hero image container */
+.hero-right {
+    flex: 1;
+    min-width: 280px;
+    max-width: 800px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 82, 204, 0.15);
+    box-sizing: border-box;
+    animation: fadeInUp 1s ease forwards;
+}
+.hero-right img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
     }
-    /* The header flex centering still works on mobile */
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    /* Show hamburger */
+    .mobile-menu-toggle {
+        display: block;
+    }
+    /* Stack nav-links vertically when open */
+    .nav-links {
+        flex-direction: column;
+        display: none;
+        position: absolute;
+        top: 70px; /* adjust if header height changes */
+        right: 20px;
+        background: var(--white);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        border-radius: 8px;
+        padding: 1rem;
+    }
+    .nav-links.open {
+        display: flex;
+    }
+    /* Expand hero to full width */
+    .hero-section {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 2rem 1rem;
+    }
+    .hero-left,
+    .hero-right {
+        max-width: 100%;
+    }
+}
