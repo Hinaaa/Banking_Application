@@ -94,63 +94,61 @@ export default function Dashboard() {
                 </div>
             </div>
             {/*Transactions*/}
-            <h3>Transactions </h3>
+            {/* Transactions */}
+            <h3>Transactions</h3>
             {Array.isArray(transactionDashboard) && transactionDashboard.length === 0 ? (
                 <p>No transactions to show.</p>
             ) : (
-                <table className="transaction-table">
-                    <thead>
-                    <tr>
-                        <th>Transaction Id</th>
-                        <th>Transaction</th>
-                        <th>Transaction amount</th>
-                        <th>Transaction Type</th>
-                        <th>Transaction Description</th>
-                        <th>Transaction Date</th>
-                        <th>Transaction Status</th>
-                        <th>Transaction to Account</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {Array.isArray(transactionDashboard) &&
-                        // Sorting transactionDate descending (newest first)
-                        transactionDashboard
-                            .slice() // create a shallow copy to avoid mutating state
-                            .sort((a, b) => new Date(b.transactionDate).getTime() - new Date(a.transactionDate).getTime())
-                            .map((transactionDetail) => {
-                                const rawDir = transactionDetail.transactionDirection || "";
-                                const dir = rawDir.toString().trim().toLowerCase();
-                                let rowClass = "";
-                                if (dir === "credit") {
-                                    rowClass = "credit";
-                                } else if (dir === "debit") {
-                                    rowClass = "debit";
-                                }
-                                const amount = Math.abs(Number(transactionDetail.amount)).toFixed(2);
-
-                                return (
-                                    <tr
-                                        key={transactionDetail.id}
-                                        className={`${rowClass || ""} cursor-pointer hover:bg-gray-100`}
-                                        onClick={() =>
-                                            navigate(`/viewtransaction/${transactionDetail.id}`, {
-                                                state: { transaction : transactionDetail},
-                                            })
-                                        }
-                                    >
-                                        <td data-label="Transaction Id">{transactionDetail.id}</td>
-                                        <td data-label="Transaction">{transactionDetail.transactionDirection}</td>
-                                        <td data-label="Transaction amount">{amount}</td>
-                                        <td data-label="Transaction Type">{transactionDetail.transactionType}</td>
-                                        <td data-label="Transaction Description">{transactionDetail.description}</td>
-                                        <td data-label="Transaction Date">{new Date(transactionDetail.transactionDate).toLocaleString()}</td>
-                                        <td data-label="Transaction Status">{transactionDetail.status}</td>
-                                        <td data-label="Transaction to Account">{transactionDetail.transactionFromToAccountDetails}</td>
-                                    </tr>
-                                );
-                            })}
-                    </tbody>
-                </table>
+                Array.isArray(transactionDashboard) ? (
+                    <div className="table-wrapper">
+                        <table className="transaction-table" aria-label="Transaction details">
+                            <thead>
+                            <tr>
+                                <th>Transaction Id</th>
+                                <th>Transaction</th>
+                                <th>Amount</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>To Account</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {transactionDashboard
+                                .slice()
+                                .sort((a, b) => new Date(b.transactionDate).getTime() - new Date(a.transactionDate).getTime())
+                                .map((transactionDetail) => {
+                                    const dir = (transactionDetail.transactionDirection || "").toLowerCase().trim();
+                                    const rowClass = dir === "credit" ? "credit" : dir === "debit" ? "debit" : "";
+                                    const amount = Math.abs(Number(transactionDetail.amount)).toFixed(2);
+                                    return (
+                                        <tr
+                                            key={transactionDetail.id}
+                                            className={`${rowClass} cursor-pointer`}
+                                            onClick={() =>
+                                                navigate(`/viewtransaction/${transactionDetail.id}`, {
+                                                    state: { transaction: transactionDetail },
+                                                })
+                                            }
+                                        >
+                                            <td data-label="Transaction Id">{transactionDetail.id}</td>
+                                            <td data-label="Transaction">{transactionDetail.transactionDirection}</td>
+                                            <td data-label="Amount">{amount}</td>
+                                            <td data-label="Type">{transactionDetail.transactionType}</td>
+                                            <td data-label="Description">{transactionDetail.description}</td>
+                                            <td data-label="Date">{new Date(transactionDetail.transactionDate).toLocaleString()}</td>
+                                            <td data-label="Status">{transactionDetail.status}</td>
+                                            <td data-label="To Account">{transactionDetail.transactionFromToAccountDetails}</td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                ) : (
+                    <p>Transactions data is not available.</p>
+                )
             )}
         </>
     );
