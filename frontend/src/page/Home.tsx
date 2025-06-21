@@ -1,43 +1,27 @@
-// src/components/Home.jsx
-import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import heroImage from "../assets/images/HomeImage.png";
 import "../css/Home.css";
 
 export default function Home() {
     const navigate = useNavigate();
-    const [menuOpen, setMenuOpen] = useState(false);
 
     const handleLogin = () => {
         navigate("/login");
-        setMenuOpen(false);
     };
 
     const handleRegister = () => {
         navigate("/register");
-        setMenuOpen(false);
-    };
-
-    const toggleMenu = () => {
-        setMenuOpen(prev => !prev);
     };
 
     return (
         <>
             <header className="header">
                 <h1 className="logo">MyBank</h1>
-                <button
-                    className="mobile-menu-toggle"
-                    aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
-                    onClick={toggleMenu}
-                >
-                    {/* Simple hamburger icon; could be replaced with an icon component */}
-                    {menuOpen ? "✕" : "☰"}
-                </button>
+
                 <nav className="nav-bar" aria-label="Main navigation">
-                    <ul className={`nav-links${menuOpen ? " open" : ""}`}>
+                    <ul className="nav-links">
                         <li>
-                            <Link to="/about" onClick={() => setMenuOpen(false)}>
+                            <Link to="/about" aria-label="About Us">
                                 About Us
                             </Link>
                         </li>
@@ -75,7 +59,6 @@ export default function Home() {
                     </div>
 
                     <div className="hero-right">
-                        {/* Consider using srcSet or <picture> for responsive images */}
                         <img
                             src={heroImage}
                             alt="Illustration of secure online banking"
