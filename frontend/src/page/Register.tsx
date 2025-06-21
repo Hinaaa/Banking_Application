@@ -103,6 +103,7 @@ export default function Register() {
                         value={confirmNewPassword}
                         onChange={(e) => setConfirmNewPassword(e.target.value)}
                     />
+
                     {error && <div className="error-message">{error}</div>}
                     <button type="submit">Continue</button>
 
